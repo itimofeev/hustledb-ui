@@ -8,7 +8,7 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
-import {AppBar} from "material-ui";
+import { AppBar } from 'material-ui';
 
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
@@ -27,11 +27,13 @@ function App(props) {
           titleTemplate="%s | Hustle SA"
           defaultTitle="Hustle SA"
           meta={[
-            {name: 'description', content: 'Hustle SA dancers rating'},
+            { name: 'description', content: 'Hustle SA dancers rating' },
           ]}
         />
 
-        <AppBar title="Hustle SA"/>
+        <AppBar
+          title="Hustle SA"
+        />
 
         {React.Children.toArray(props.children)}
 

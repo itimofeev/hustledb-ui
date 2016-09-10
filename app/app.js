@@ -43,11 +43,11 @@ openSansObserver.load().then(() => {
 // Import i18n messages
 import { translationMessages } from './i18n';
 
-import injectTapEventPlugin from "react-tap-event-plugin";
-//Needed for onTouchTap
-//Can go away when react 1.0 release
-//Check this repo:
-//https://github.com/zilverline/react-tap-event-plugin
+import injectTapEventPlugin from 'react-tap-event-plugin';
+// Needed for onTouchTap
+// Can go away when react 1.0 release
+// Check this repo:
+// https://github.com/zilverline/react-tap-event-plugin
 injectTapEventPlugin();
 
 // Create redux store with history

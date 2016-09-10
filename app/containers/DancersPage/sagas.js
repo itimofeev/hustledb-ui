@@ -1,10 +1,10 @@
-import {take, call, put, select, cancel, fork} from 'redux-saga/effects';
-import {LOCATION_CHANGE} from 'react-router-redux';
-import {LOAD_DANCERS} from './constants';
+import { take, call, put, select, cancel, fork } from 'redux-saga/effects';
+import { LOCATION_CHANGE } from 'react-router-redux';
+import { LOAD_DANCERS } from './constants';
 import request from 'utils/request';
 
-import {selectSearchInput} from './selectors';
-import {dancersLoaded, dancersLoadingError} from './actions';
+import { selectSearchInput } from './selectors';
+import { dancersLoaded, dancersLoadingError } from './actions';
 
 
 /**

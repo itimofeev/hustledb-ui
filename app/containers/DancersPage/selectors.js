@@ -1,4 +1,4 @@
-import {createSelector} from 'reselect';
+import { createSelector } from 'reselect';
 
 /**
  * Direct selector to the dancersPage state domain
@@ -26,5 +26,5 @@ const selectDancersPage = () => createSelector(
 export default selectDancersPage;
 export {
   selectDancersPageDomain,
-  selectSearchInput
+  selectSearchInput,
 };

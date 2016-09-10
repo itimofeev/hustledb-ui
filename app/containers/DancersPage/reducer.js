@@ -4,7 +4,7 @@
  *
  */
 
-import {fromJS} from 'immutable';
+import { fromJS } from 'immutable';
 import {
   CHANGE_SEARCH_INPUT,
 } from './constants';
