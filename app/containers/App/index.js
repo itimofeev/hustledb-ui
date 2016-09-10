@@ -14,10 +14,6 @@ import {AppBar} from "material-ui";
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
-import Img from 'components/Img';
-import Footer from 'components/Footer';
-import A from 'components/A';
-
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import styles from './styles.css';
@@ -40,8 +36,8 @@ function App(props) {
         {React.Children.toArray(props.children)}
 
       </div>
-    </MuiThemeProvider>
 
+    </MuiThemeProvider>
   );
 }
 

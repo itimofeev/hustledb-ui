@@ -9,6 +9,10 @@ const selectDancersPageDomain = () => state => state.get('dancersPage');
  * Other specific selectors
  */
 
+const selectSearchInput = () => createSelector(
+  selectDancersPageDomain(),
+  (dancersPageState) => dancersPageState.get('searchInput')
+);
 
 /**
  * Default selector used by DancersPage
@@ -22,4 +26,5 @@ const selectDancersPage = () => createSelector(
 export default selectDancersPage;
 export {
   selectDancersPageDomain,
+  selectSearchInput
 };

@@ -6,15 +6,18 @@
 
 import {fromJS} from 'immutable';
 import {
-  DEFAULT_ACTION,
+  CHANGE_SEARCH_INPUT,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  searchInput: '',
+});
 
 function dancersPageReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case CHANGE_SEARCH_INPUT:
+      return state
+        .set('searchInput', action.searchInput);
     default:
       return state;
   }

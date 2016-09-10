@@ -7,31 +7,53 @@
 import React from 'react';
 import {connect} from 'react-redux';
 import Helmet from 'react-helmet';
-import selectDancersPage from './selectors';
+import {selectSearchInput} from './selectors';
+import FlatButton from 'material-ui/FlatButton';
+import TextField from 'material-ui/TextField';
 import {FormattedMessage} from 'react-intl';
 import messages from './messages';
+import {changeDancerInput} from './actions';
+import {createStructuredSelector} from 'reselect';
 import styles from './styles.css';
 
+
 export class DancersPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
+
   render() {
     return (
       <div className={styles.dancersPage}>
         <Helmet
-          title="DancersPage"
+          title="Dancers"
           meta={[
-            {name: 'description', content: 'Description of DancersPage'},
+            {name: 'description', content: 'Search for hustle dancers by code or name'},
           ]}
         />
-        <FormattedMessage {...messages.header} />
+
+        <TextField floatingLabelText="Input dancer code or name"
+                   onChange={this.props.onUpdateSearchInput}
+                   value={this.props.searchInput}/>
+
+        <FlatButton label="Search"/>
+
       </div>
     );
   }
 }
 
-const mapStateToProps = selectDancersPage();
+DancersPage.propTypes = {
+  onUpdateInput: React.PropTypes.func,
+  searchInput: React.PropTypes.string
+};
+
+const mapStateToProps = createStructuredSelector({
+  searchInput: selectSearchInput(),
+});
 
 function mapDispatchToProps(dispatch) {
   return {
+    onUpdateSearchInput: (evt) => {
+      return dispatch(changeDancerInput(evt.target.value))
+    },
     dispatch,
   };
 }
