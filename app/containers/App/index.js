@@ -28,17 +28,16 @@ function App(props) {
 
       <div className={styles.wrapper}>
         <Helmet
-          titleTemplate="%s - React.js Boilerplate"
-          defaultTitle="React.js Boilerplate"
+          titleTemplate="%s | Hustle SA"
+          defaultTitle="Hustle SA"
           meta={[
-            {name: 'description', content: 'A React.js Boilerplate application'},
+            {name: 'description', content: 'Hustle SA dancers rating'},
           ]}
         />
 
         <AppBar title="Hustle SA"/>
 
         {React.Children.toArray(props.children)}
-        <Footer />
 
       </div>
     </MuiThemeProvider>
