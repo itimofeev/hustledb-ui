@@ -60,6 +60,13 @@ export class HomePage extends React.Component {
     this.openRoute('/features');
   };
 
+  /**
+   * Changed route to '/dancers'
+   */
+  openDancersPage = () => {
+    this.openRoute('/dancers');
+  };
+
   render() {
     let mainContent = null;
 
@@ -120,6 +127,9 @@ export class HomePage extends React.Component {
           </section>
           <Button handleRoute={this.openFeaturesPage}>
             <FormattedMessage {...messages.featuresButton} />
+          </Button>
+          <Button handleRoute={this.openDancersPage}>
+            <FormattedMessage {...messages.dancersButton} />
           </Button>
         </div>
       </article>
