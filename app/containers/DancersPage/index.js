@@ -12,7 +12,7 @@ import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
 import {FormattedMessage} from 'react-intl';
 import messages from './messages';
-import {changeDancerInput} from './actions';
+import {changeDancerInput, loadDancers} from './actions';
 import {createStructuredSelector} from 'reselect';
 import styles from './styles.css';
 
@@ -33,7 +33,7 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
                    onChange={this.props.onUpdateSearchInput}
                    value={this.props.searchInput}/>
 
-        <FlatButton label="Search"/>
+        <FlatButton label="Search" onClick={this.props.onSearchClick}/>
 
       </div>
     );
@@ -42,6 +42,7 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
 
 DancersPage.propTypes = {
   onUpdateInput: React.PropTypes.func,
+  onSearchClick: React.PropTypes.func,
   searchInput: React.PropTypes.string
 };
 
@@ -51,9 +52,8 @@ const mapStateToProps = createStructuredSelector({
 
 function mapDispatchToProps(dispatch) {
   return {
-    onUpdateSearchInput: (evt) => {
-      return dispatch(changeDancerInput(evt.target.value))
-    },
+    onUpdateSearchInput: (evt) => dispatch(changeDancerInput(evt.target.value)),
+    onSearchClick: () => dispatch(loadDancers()),
     dispatch,
   };
 }
