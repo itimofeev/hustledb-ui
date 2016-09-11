@@ -13,7 +13,7 @@ import { dancersLoaded, dancersLoadingError } from './actions';
 export function* getDancers() {
   // Select username from store
   const searchInput = yield select(selectSearchInput());
-  const requestURL = `/api/v1/dancers/${searchInput}`;
+  const requestURL = `/api/v1/dancers?query=${searchInput}`;
 
   // Call our request helper (see 'utils/request')
   const dancers = yield call(request, requestURL);

@@ -7,9 +7,10 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
-import { selectSearchInput } from './selectors';
+import { selectSearchInput, selectDancers } from './selectors';
 import FlatButton from 'material-ui/FlatButton';
 import TextField from 'material-ui/TextField';
+import { Table, TableRow, TableRowColumn, TableHeaderColumn, TableHeader, TableBody } from 'material-ui/Table';
 import { changeDancerInput, loadDancers } from './actions';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
@@ -18,6 +19,27 @@ import styles from './styles.css';
 export class DancersPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
   render() {
+    let searchResultTable;
+    if (this.props.dancers) {
+      searchResultTable = (<Table>
+        <TableHeader displaySelectAll={false} adjustForCheckbox={false}>
+          <TableRow>
+            <TableHeaderColumn>Code</TableHeaderColumn>
+            <TableHeaderColumn>Name</TableHeaderColumn>
+          </TableRow>
+        </TableHeader>
+
+        <TableBody displayRowCheckbox={false}>
+          {this.props.dancers.content.map(c =>
+            <TableRow key={c.id}>
+              <TableRowColumn>{c.code}</TableRowColumn>
+              <TableRowColumn>{[c.surname, c.firstName, c.patronymic].filter(v => v).join(' ')}</TableRowColumn>
+            </TableRow>
+          )}
+        </TableBody>
+      </Table>);
+    }
+
     return (
       <div className={styles.dancersPage}>
         <Helmet
@@ -37,6 +59,8 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
           label="Search" onClick={this.props.onSearchClick}
         />
 
+        {searchResultTable}
+
       </div>
     );
   }
@@ -47,10 +71,16 @@ DancersPage.propTypes = {
   onUpdateSearchInput: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
   searchInput: React.PropTypes.string,
+
+  dancers: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
 };
 
 const mapStateToProps = createStructuredSelector({
   searchInput: selectSearchInput(),
+  dancers: selectDancers(),
 });
 
 function mapDispatchToProps(dispatch) {
