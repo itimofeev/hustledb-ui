@@ -3,6 +3,7 @@ const express = require('express');
 const path = require('path');
 const compression = require('compression');
 const pkg = require(path.resolve(process.cwd(), 'package.json'));
+const proxy = require('http-proxy-middleware');
 
 // Dev middleware
 const addDevMiddlewares = (app, webpackConfig) => {
@@ -16,7 +17,9 @@ const addDevMiddlewares = (app, webpackConfig) => {
     silent: true,
     stats: 'errors-only',
   });
+  const apiProxy = proxy('/api', { target: 'http://localhost:8080' });
 
+  app.use(apiProxy);
   app.use(middleware);
   app.use(webpackHotMiddleware(compiler));
 

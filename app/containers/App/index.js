@@ -8,33 +8,38 @@
 
 import React from 'react';
 import Helmet from 'react-helmet';
+import { AppBar } from 'material-ui';
+
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
-import Img from 'components/Img';
-import Footer from 'components/Footer';
-import Banner from './banner-metal.jpg';
-import A from 'components/A';
+import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
 import styles from './styles.css';
 
 function App(props) {
   return (
-    <div className={styles.wrapper}>
-      <Helmet
-        titleTemplate="%s - React.js Boilerplate"
-        defaultTitle="React.js Boilerplate"
-        meta={[
-          { name: 'description', content: 'A React.js Boilerplate application' },
-        ]}
-      />
-      <A className={styles.logoWrapper} href="https://twitter.com/mxstbr">
-        <Img className={styles.logo} src={Banner} alt="react-boilerplate - Logo" />
-      </A>
-      {React.Children.toArray(props.children)}
-      <Footer />
-    </div>
+    <MuiThemeProvider>
+
+      <div className={styles.wrapper}>
+        <Helmet
+          titleTemplate="%s | Hustle SA"
+          defaultTitle="Hustle SA"
+          meta={[
+            { name: 'description', content: 'Hustle SA dancers rating' },
+          ]}
+        />
+
+        <AppBar
+          title="Hustle SA"
+        />
+
+        {React.Children.toArray(props.children)}
+
+      </div>
+
+    </MuiThemeProvider>
   );
 }
 

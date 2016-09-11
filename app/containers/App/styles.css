@@ -11,7 +11,7 @@ body {
 }
 
 body.fontLoaded {
-  font-family: 'Open Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-family: Roboto, sans-serif;
 }
 
 :global(#app) {
@@ -21,20 +21,8 @@ body.fontLoaded {
 }
 
 .wrapper {
-  max-width: calc(768px + 16px * 2);
   margin: 0 auto;
   display: flex;
   min-height: 100%;
-  padding: 0 16px;
   flex-direction: column;
-}
-
-.logoWrapper {
-  padding: 2em 0;
-}
-
-.logo {
-  width: 100%;
-  margin: 0 auto;
-  display: block;
 }

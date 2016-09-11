@@ -56,23 +56,23 @@ describe('<HomePage />', () => {
     expect(renderedComponent.contains(<List items={repos} component={RepoListItem} />)).toEqual(true);
   });
 
-  it('should link to /features', () => {
-    const openRouteSpy = expect.createSpy();
-
-    // Spy on the openRoute method of the HomePage
-    const openRoute = (dest) => {
-      if (dest === '/features') {
-        openRouteSpy();
-      }
-    };
-
-    const renderedComponent = mount(
-      <IntlProvider locale="en">
-        <HomePage loading changeRoute={openRoute} />
-      </IntlProvider>
-    );
-    const button = renderedComponent.find('button');
-    button.simulate('click');
-    expect(openRouteSpy).toHaveBeenCalled();
-  });
+  // it('should link to /features', () => {
+  //   const openRouteSpy = expect.createSpy();
+  //
+  //   // Spy on the openRoute method of the HomePage
+  //   const openRoute = (dest) => {
+  //     if (dest === '/features') {
+  //       openRouteSpy();
+  //     }
+  //   };
+  //
+  //   const renderedComponent = mount(
+  //     <IntlProvider locale="en">
+  //       <HomePage loading changeRoute={openRoute} />
+  //     </IntlProvider>
+  //   );
+  //   const button = renderedComponent.find('button');
+  //   button.simulate('click');
+  //   expect(openRouteSpy).toHaveBeenCalled();
+  // });
 });
