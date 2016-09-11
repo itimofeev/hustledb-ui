@@ -26,6 +26,8 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
           <TableRow>
             <TableHeaderColumn>Code</TableHeaderColumn>
             <TableHeaderColumn>Name</TableHeaderColumn>
+            <TableHeaderColumn>Classic Class</TableHeaderColumn>
+            <TableHeaderColumn>JNJ Class</TableHeaderColumn>
           </TableRow>
         </TableHeader>
 
@@ -34,6 +36,8 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
             <TableRow key={c.id}>
               <TableRowColumn>{c.code}</TableRowColumn>
               <TableRowColumn>{[c.surname, c.firstName, c.patronymic].filter(v => v).join(' ')}</TableRowColumn>
+              <TableRowColumn>{c.pairClass}</TableRowColumn>
+              <TableRowColumn>{c.jnjClass}</TableRowColumn>
             </TableRow>
           )}
         </TableBody>
