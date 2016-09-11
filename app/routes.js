@@ -67,6 +67,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/dancers/:dancerId',
+      name: 'dancerProfile',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/DancerProfile/reducer'),
+          System.import('containers/DancerProfile/sagas'),
+          System.import('containers/DancerProfile'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('dancerProfile', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '*',
       name: 'notfound',
       getComponent(nextState, cb) {

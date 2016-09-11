@@ -14,6 +14,7 @@ import { Table, TableRow, TableRowColumn, TableHeaderColumn, TableHeader, TableB
 import { changeDancerInput, loadDancers } from './actions';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
+import { push } from 'react-router-redux';
 
 
 export class DancersPage extends React.Component { // eslint-disable-line react/prefer-stateless-function
@@ -34,7 +35,9 @@ export class DancersPage extends React.Component { // eslint-disable-line react/
         <TableBody displayRowCheckbox={false}>
           {this.props.dancers.content.map(c =>
             <TableRow key={c.id}>
-              <TableRowColumn>{c.code}</TableRowColumn>
+              <TableRowColumn>
+                <a onClick={() => this.props.changeRoute(`/dancers/${c.code}`)}>{c.code}</a>
+              </TableRowColumn>
               <TableRowColumn>{[c.surname, c.firstName, c.patronymic].filter(v => v).join(' ')}</TableRowColumn>
               <TableRowColumn>{c.pairClass}</TableRowColumn>
               <TableRowColumn>{c.jnjClass}</TableRowColumn>
@@ -74,6 +77,7 @@ DancersPage.propTypes = {
   onUpdateInput: React.PropTypes.func,
   onUpdateSearchInput: React.PropTypes.func,
   onSearchClick: React.PropTypes.func,
+  changeRoute: React.PropTypes.func,
   searchInput: React.PropTypes.string,
 
   dancers: React.PropTypes.oneOfType([
@@ -91,6 +95,7 @@ function mapDispatchToProps(dispatch) {
   return {
     onUpdateSearchInput: (evt) => dispatch(changeDancerInput(evt.target.value)),
     onSearchClick: () => dispatch(loadDancers()),
+    changeRoute: (url) => dispatch(push(url)),
     dispatch,
   };
 }
