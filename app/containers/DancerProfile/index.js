@@ -11,17 +11,19 @@ import { selectDancerProfileObject, selectDancerId } from './selectors';
 import { loadDancerProfile } from './actions';
 import styles from './styles.css';
 import { createStructuredSelector } from 'reselect';
-import { renderDancerTitle } from '../../utils/util';
 import Paper from 'material-ui/Paper';
+import { List, ListItem } from 'material-ui/List';
+import { push } from 'react-router-redux';
 
 
 const paperStyle = {
-  height: 200,
-  width: 200,
+  height: 500,
+  width: 600,
   margin: '0 auto',
   textAlign: 'center',
   display: 'inline-block',
 };
+
 
 export class DancerProfile extends React.Component { // eslint-disable-line react/prefer-stateless-function
 
@@ -34,15 +36,76 @@ export class DancerProfile extends React.Component { // eslint-disable-line reac
     this.props.loadDancerProfile(dancerCode);
   }
 
+  /**
+   * Changes the route
+   *
+   * @param  {string} route The route we want to go to
+   */
+  openRoute = (route) => {
+    this.props.changeRoute(route);
+  };
+
+  /**
+   * Changed route to '/features'
+   */
+  openCompetitionPage = (id) => {
+    this.openRoute(`/competitions/${id}`);
+  };
+
   render() {
-    let dancerId = this.props.dancerId;
+    const dancerId = this.props.dancerId;
     let dancerProfile = this.props.dancerProfile;
 
     if (dancerId) {
-      dancerProfile = (<div>
-        hello, {dancerId} <br />
-        {renderDancerTitle(dancerProfile)}
-      </div>);
+      dancerProfile = (
+        <div className={styles.dancerProfile}>
+          <div className={styles.dancerProfileImage}>
+            <img src="http://placehold.it/200x200" alt="profile" />
+          </div>
+
+          <div className={styles.dancerProfileInfo}>
+            <h2>
+              {dancerProfile.title}
+            </h2>
+            <p>
+              Code: {dancerProfile.code}
+            </p>
+            <p>
+              Main class: {dancerProfile.pairClass}
+            </p>
+            <p>
+              Jnj class: {dancerProfile.jnjClass}
+            </p>
+          </div>
+
+          <div>
+            <h2>Clubs:</h2>
+            <div>
+              <List>
+                {dancerProfile.clubs.map(c =>
+                  <ListItem key={c.id} primaryText={c.title} />
+                )}
+              </List>
+            </div>
+          </div>
+
+          <div>
+            <h2>Results:</h2>
+            <div>
+              <ul>
+                {dancerProfile.results.map(c =>
+                  <li key={c.id}>
+                    <h2>Competition: {c.competitionTitle}</h2>
+                    <h4>Nomination: {c.nominationTitle}</h4>
+                    <p>{c.resultString}</p>
+                  </li>
+                )}
+              </ul>
+            </div>
+          </div>
+
+        </div>
+      );
     }
 
     return (
@@ -59,6 +122,7 @@ export class DancerProfile extends React.Component { // eslint-disable-line reac
       </div>
     );
   }
+
 }
 
 DancerProfile.propTypes = {
@@ -71,6 +135,7 @@ DancerProfile.propTypes = {
     React.PropTypes.bool,
   ]),
   loadDancerProfile: React.PropTypes.func,
+  changeRoute: React.PropTypes.func,
 };
 
 const mapStateToProps = createStructuredSelector({
@@ -83,6 +148,7 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     loadDancerProfile: (dancerId) => dispatch(loadDancerProfile(dancerId)),
+    changeRoute: (url) => dispatch(push(url)),
   };
 }
 
