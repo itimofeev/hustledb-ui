@@ -34,4 +34,8 @@ export default defineMessages({
     id: 'boilerplate.containers.HomePage.dancers.Button',
     defaultMessage: 'Dancers',
   },
+  competitionsButton: {
+    id: 'boilerplate.containers.HomePage.competitions.Button',
+    defaultMessage: 'Competitions',
+  },
 });
