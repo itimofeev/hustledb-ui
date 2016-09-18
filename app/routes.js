@@ -87,6 +87,26 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
+      path: '/competitions',
+      name: 'competitionList',
+      getComponent(nextState, cb) {
+        const importModules = Promise.all([
+          System.import('containers/CompetitionList/reducer'),
+          System.import('containers/CompetitionList/sagas'),
+          System.import('containers/CompetitionList'),
+        ]);
+
+        const renderRoute = loadModule(cb);
+
+        importModules.then(([reducer, sagas, component]) => {
+          injectReducer('competitionList', reducer.default);
+          injectSagas(sagas.default);
+          renderRoute(component);
+        });
+
+        importModules.catch(errorLoading);
+      },
+    }, {
       path: '/competitions/:competitionId',
       name: 'competitionPage',
       getComponent(nextState, cb) {
