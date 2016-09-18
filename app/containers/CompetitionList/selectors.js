@@ -9,6 +9,10 @@ const selectCompetitionListDomain = () => state => state.get('competitionList');
  * Other specific selectors
  */
 
+const selectCompetitionListProp = () => createSelector(
+  selectCompetitionListDomain(),
+  (substate) => substate.get('competitionList')
+);
 
 /**
  * Default selector used by CompetitionList
@@ -22,4 +26,5 @@ const selectCompetitionList = () => createSelector(
 export default selectCompetitionList;
 export {
   selectCompetitionListDomain,
+  selectCompetitionListProp,
 };

@@ -6,15 +6,21 @@
 
 import { fromJS } from 'immutable';
 import {
-  DEFAULT_ACTION,
+  LOAD_COMPETITION_LIST_SUCCESS, LOAD_COMPETITION_LIST_ERROR,
 } from './constants';
 
-const initialState = fromJS({});
+const initialState = fromJS({
+  competitionList: false,
+});
 
 function competitionListReducer(state = initialState, action) {
   switch (action.type) {
-    case DEFAULT_ACTION:
-      return state;
+    case LOAD_COMPETITION_LIST_SUCCESS:
+      return state
+        .set('competitionList', action.competitionList);
+    case LOAD_COMPETITION_LIST_ERROR:
+      return state
+        .set('error', action.error);
     default:
       return state;
   }
