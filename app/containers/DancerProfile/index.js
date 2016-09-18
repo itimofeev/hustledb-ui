@@ -95,7 +95,9 @@ export class DancerProfile extends React.Component { // eslint-disable-line reac
               <ul>
                 {dancerProfile.results.map(c =>
                   <li key={c.id}>
-                    <h2>Competition: {c.competitionTitle}</h2>
+                    <h2>Competition:
+                      <a onClick={() => this.openCompetitionPage(c.competitionId)}>{c.competitionTitle}</a>
+                    </h2>
                     <h4>Nomination: {c.nominationTitle}</h4>
                     <p>{c.resultString}</p>
                   </li>
