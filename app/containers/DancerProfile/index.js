@@ -45,9 +45,6 @@ export class DancerProfile extends React.Component { // eslint-disable-line reac
     this.props.changeRoute(route);
   };
 
-  /**
-   * Changed route to '/features'
-   */
   openCompetitionPage = (id) => {
     this.openRoute(`/competitions/${id}`);
   };

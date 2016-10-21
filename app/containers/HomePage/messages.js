@@ -26,10 +26,6 @@ export default defineMessages({
     id: 'boilerplate.containers.HomePage.tryme.atPrefix',
     defaultMessage: '@',
   },
-  featuresButton: {
-    id: 'boilerplate.containers.HomePage.features.Button',
-    defaultMessage: 'Features',
-  },
   dancersButton: {
     id: 'boilerplate.containers.HomePage.dancers.Button',
     defaultMessage: 'Dancers',
