@@ -9,6 +9,10 @@
 import React from 'react';
 import Helmet from 'react-helmet';
 import { AppBar } from 'material-ui';
+import { push } from 'react-router-redux';
+import { connect } from 'react-redux';
+import { createStructuredSelector } from 'reselect';
+
 
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
@@ -32,6 +36,7 @@ function App(props) {
         />
 
         <AppBar
+          onTitleTouchTap={props.handleTitleTouchTap}
           title="Hustle SA"
         />
 
@@ -45,6 +50,18 @@ function App(props) {
 
 App.propTypes = {
   children: React.PropTypes.node,
+  handleTitleTouchTap: React.PropTypes.func,
 };
 
-export default App;
+const mapStateToProps = createStructuredSelector({
+});
+
+
+function mapDispatchToProps(dispatch) {
+  return {
+    dispatch,
+    handleTitleTouchTap: () => dispatch(push('/')),
+  };
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(App);
