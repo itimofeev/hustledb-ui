@@ -8,6 +8,6 @@ import { defineMessages } from 'react-intl';
 export default defineMessages({
   header: {
     id: 'app.containers.CompetitionList.header',
-    defaultMessage: 'This is CompetitionList container !',
+    defaultMessage: 'This is CompetitionListPage container !',
   },
 });

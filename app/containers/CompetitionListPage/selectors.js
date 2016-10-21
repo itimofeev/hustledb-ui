@@ -15,7 +15,7 @@ const selectCompetitionListProp = () => createSelector(
 );
 
 /**
- * Default selector used by CompetitionList
+ * Default selector used by CompetitionListPage
  */
 
 const selectCompetitionList = () => createSelector(

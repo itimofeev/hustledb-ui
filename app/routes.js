@@ -91,9 +91,9 @@ export default function createRoutes(store) {
       name: 'competitionList',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/CompetitionList/reducer'),
-          System.import('containers/CompetitionList/sagas'),
-          System.import('containers/CompetitionList'),
+          System.import('containers/CompetitionListPage/reducer'),
+          System.import('containers/CompetitionListPage/sagas'),
+          System.import('containers/CompetitionListPage'),
         ]);
 
         const renderRoute = loadModule(cb);
