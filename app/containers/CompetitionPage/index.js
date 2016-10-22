@@ -8,8 +8,7 @@ import React from 'react';
 import { connect } from 'react-redux';
 import Helmet from 'react-helmet';
 import { selectCompetition } from './selectors';
-import { FormattedMessage } from 'react-intl';
-import messages from './messages';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import styles from './styles.css';
 import { loadCompetition } from './actions';
 import { push } from 'react-router-redux';
@@ -26,15 +25,29 @@ export class CompetitionPage extends React.Component { // eslint-disable-line re
   render() {
 
     let error;
-    if(this.props.error) {
+    if (this.props.error) {
       error = this.props.error;
     }
 
     let mainContent;
-    if(this.props.competition) {
+    if (this.props.competition) {
       const comp = this.props.competition;
+      const nominations = comp.nominations;
       mainContent = (
-        <div>CompId: {comp.id}</div>
+        <section>
+          <h2>{comp.title}</h2>
+          <Tabs>
+            {nominations.map((item, index)=>
+              <Tab key={index} label={item.title} >
+                {item.results.map((result, resultIndex) =>
+                  <p key={resultIndex}>
+                    {result.resultString}
+                  </p>
+                )}
+              </Tab>
+            )}
+          </Tabs>
+        </section>
       );
     }
 
