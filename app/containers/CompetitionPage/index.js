@@ -23,7 +23,6 @@ export class CompetitionPage extends React.Component { // eslint-disable-line re
   }
 
   render() {
-
     let error;
     if (this.props.error) {
       error = this.props.error;
@@ -37,8 +36,8 @@ export class CompetitionPage extends React.Component { // eslint-disable-line re
         <section>
           <h2>{comp.title}</h2>
           <Tabs>
-            {nominations.map((item, index)=>
-              <Tab key={index} label={item.title} >
+            {nominations.map((item, index) =>
+              <Tab key={index} label={item.title}>
                 {item.results.map((result, resultIndex) =>
                   <p key={resultIndex}>
                     {result.resultString}

@@ -30,7 +30,7 @@ export function* getCompetitionWatcher() {
 }
 
 
-export function* competitionData() {
+export function* competitionDataSaga() {
   // Fork watcher so we can continue execution
   const watcher = yield fork(getCompetitionWatcher);
 
@@ -41,5 +41,5 @@ export function* competitionData() {
 
 // All sagas to be loaded
 export default [
-  competitionData,
+  competitionDataSaga,
 ];

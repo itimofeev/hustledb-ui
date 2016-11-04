@@ -62,7 +62,6 @@ export class HomePage extends React.Component {
   };
 
   render() {
-
     return (
       <article>
         <Helmet

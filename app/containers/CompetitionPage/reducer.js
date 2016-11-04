@@ -6,7 +6,7 @@
 
 import { fromJS } from 'immutable';
 import {
-  LOAD_COMPETITION_REQUEST, LOAD_COMPETITION_SUCCESS, LOAD_COMPETITION_ERROR
+  LOAD_COMPETITION_REQUEST, LOAD_COMPETITION_SUCCESS, LOAD_COMPETITION_ERROR,
 } from './constants';
 
 const initialState = fromJS({

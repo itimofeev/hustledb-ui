@@ -14,7 +14,6 @@ import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
 
 
-
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
 
