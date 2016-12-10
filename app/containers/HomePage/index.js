@@ -11,6 +11,7 @@ import Helmet from 'react-helmet';
 
 import messages from './messages';
 import { createStructuredSelector } from 'reselect';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import {
   selectFCompList,
@@ -56,6 +57,30 @@ export class HomePage extends React.Component {
   };
 
   render() {
+    const fCompList = this.props.fCompList;
+    let listRender;
+
+    if (fCompList) {
+      listRender = (
+        <Table selectable={false}>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn><FormattedMessage {...messages.competitionTitle} /></TableHeaderColumn>
+              <TableHeaderColumn><FormattedMessage {...messages.competitionDate} /></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false}>
+            {fCompList.map((item, index) =>
+              <TableRow key={index}>
+                <TableRowColumn>{item.title}</TableRowColumn>
+                <TableRowColumn>{item.date}</TableRowColumn>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      );
+    }
+
     return (
       <article>
         <Helmet
@@ -65,6 +90,8 @@ export class HomePage extends React.Component {
           ]}
         />
         <div>
+          {listRender}
+
           <Button handleRoute={this.openDancersPage}>
             <FormattedMessage {...messages.dancersButton} />
           </Button>

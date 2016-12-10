@@ -10,7 +10,7 @@ import {
 } from './constants';
 
 const initialState = fromJS({
-  locale: 'en',
+  locale: 'ru',
 });
 
 function languageProviderReducer(state = initialState, action) {

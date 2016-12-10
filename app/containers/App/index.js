@@ -12,7 +12,7 @@ import { AppBar } from 'material-ui';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
+import Footer from '../../components/Footer';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
@@ -41,6 +41,7 @@ function App(props) {
 
         {React.Children.toArray(props.children)}
 
+        <Footer />
       </div>
 
     </MuiThemeProvider>
