@@ -1,9 +1,9 @@
 import expect from 'expect';
 import appReducer from '../reducer';
 import {
-  loadRepos,
-  reposLoaded,
-  repoLoadingError,
+  loadFCompList,
+  fCompListLoaded,
+  fCompListLoadingError,
 } from '../actions';
 import { fromJS } from 'immutable';
 
@@ -25,16 +25,16 @@ describe('appReducer', () => {
     expect(appReducer(undefined, {})).toEqual(expectedResult);
   });
 
-  it('should handle the loadRepos action correctly', () => {
+  it('should handle the loadFCompList action correctly', () => {
     const expectedResult = state
       .set('loading', true)
       .set('error', false)
       .setIn(['userData', 'repositories'], false);
 
-    expect(appReducer(state, loadRepos())).toEqual(expectedResult);
+    expect(appReducer(state, loadFCompList())).toEqual(expectedResult);
   });
 
-  it('should handle the reposLoaded action correctly', () => {
+  it('should handle the fCompListLoaded action correctly', () => {
     const fixture = [{
       name: 'My Repo',
     }];
@@ -44,10 +44,10 @@ describe('appReducer', () => {
       .set('loading', false)
       .set('currentUser', username);
 
-    expect(appReducer(state, reposLoaded(fixture, username))).toEqual(expectedResult);
+    expect(appReducer(state, fCompListLoaded(fixture, username))).toEqual(expectedResult);
   });
 
-  it('should handle the repoLoadingError action correctly', () => {
+  it('should handle the fCompListLoadingError action correctly', () => {
     const fixture = {
       msg: 'Not found',
     };
@@ -55,6 +55,6 @@ describe('appReducer', () => {
       .set('error', fixture)
       .set('loading', false);
 
-    expect(appReducer(state, repoLoadingError(fixture))).toEqual(expectedResult);
+    expect(appReducer(state, fCompListLoadingError(fixture))).toEqual(expectedResult);
   });
 });

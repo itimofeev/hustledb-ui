@@ -11,35 +11,33 @@
  */
 
 import {
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS,
-  LOAD_REPOS_ERROR,
-} from './constants';
+  LOAD_FCOMP_LIST_SUCCESS,
+  LOAD_FCOMP_LIST,
+  LOAD_FCOMP_LIST_ERROR,
+} from './actions';
+
 import { fromJS } from 'immutable';
 
 // The initial state of the App
 const initialState = fromJS({
   loading: false,
   error: false,
-  currentUser: false,
-  userData: fromJS({
-    repositories: false,
-  }),
+  fCompList: false,
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_REPOS:
+    case LOAD_FCOMP_LIST:
       return state
         .set('loading', true)
         .set('error', false)
-        .setIn(['userData', 'repositories'], false);
-    case LOAD_REPOS_SUCCESS:
+        .set('fCompList', false);
+    case LOAD_FCOMP_LIST_SUCCESS:
       return state
-        .setIn(['userData', 'repositories'], action.repos)
+        .set('fCompList', action.fCompList)
         .set('loading', false)
-        .set('currentUser', action.username);
-    case LOAD_REPOS_ERROR:
+        .set('error', false);
+    case LOAD_FCOMP_LIST_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false);

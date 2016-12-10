@@ -1,53 +1,53 @@
 import expect from 'expect';
 
 import {
-  LOAD_REPOS,
-  LOAD_REPOS_SUCCESS,
-  LOAD_REPOS_ERROR,
-} from '../constants';
+  LOAD_FCOMP_LIST,
+  LOAD_FCOMP_LIST_SUCCESS,
+  LOAD_FCOMP_LIST_ERROR,
+} from '../actions';
 
 import {
-  loadRepos,
-  reposLoaded,
-  repoLoadingError,
+  loadFCompList,
+  fCompListLoaded,
+  fCompListLoadingError,
 } from '../actions';
 
 describe('App Actions', () => {
-  describe('loadRepos', () => {
+  describe('loadFCompList', () => {
     it('should return the correct type', () => {
       const expectedResult = {
-        type: LOAD_REPOS,
+        type: LOAD_FCOMP_LIST,
       };
 
-      expect(loadRepos()).toEqual(expectedResult);
+      expect(loadFCompList()).toEqual(expectedResult);
     });
   });
 
-  describe('reposLoaded', () => {
+  describe('fCompListLoaded', () => {
     it('should return the correct type and the passed repos', () => {
       const fixture = ['Test'];
       const username = 'test';
       const expectedResult = {
-        type: LOAD_REPOS_SUCCESS,
+        type: LOAD_FCOMP_LIST_SUCCESS,
         repos: fixture,
         username,
       };
 
-      expect(reposLoaded(fixture, username)).toEqual(expectedResult);
+      expect(fCompListLoaded(fixture, username)).toEqual(expectedResult);
     });
   });
 
-  describe('repoLoadingError', () => {
+  describe('fCompListLoadingError', () => {
     it('should return the correct type and the error', () => {
       const fixture = {
         msg: 'Something went wrong!',
       };
       const expectedResult = {
-        type: LOAD_REPOS_ERROR,
+        type: LOAD_FCOMP_LIST_ERROR,
         error: fixture,
       };
 
-      expect(repoLoadingError(fixture)).toEqual(expectedResult);
+      expect(fCompListLoadingError(fixture)).toEqual(expectedResult);
     });
   });
 });

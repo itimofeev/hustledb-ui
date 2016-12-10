@@ -4,8 +4,8 @@
 
 import { take, call, put, select, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { LOAD_REPOS } from 'containers/App/constants';
-import { reposLoaded, repoLoadingError } from 'containers/App/actions';
+import { LOAD_FCOMP_LIST } from '../../containers/App/actions';
+import { fCompListLoaded, fCompListLoadingError } from '../../containers/App/actions';
 
 import request from 'utils/request';
 import { selectUsername } from 'containers/HomePage/selectors';
@@ -13,36 +13,33 @@ import { selectUsername } from 'containers/HomePage/selectors';
 /**
  * Github repos request/response handler
  */
-export function* getRepos() {
-  // Select username from store
-  const username = yield select(selectUsername());
-  const requestURL = `https://api.github.com/users/${username}/repos?type=all&sort=updated`;
+export function* getFCompList() {
+  // const username = yield select(selectUsername());
+  const requestURL = `/api/v1/forum/competitions`;
 
-  // Call our request helper (see 'utils/request')
-  const repos = yield call(request, requestURL);
+  const fCompList = yield call(request, requestURL);
 
-  if (!repos.err) {
-    yield put(reposLoaded(repos.data, username));
+  console.log(fCompList);
+
+  if (!fCompList.err) {
+    yield put(fCompListLoaded(fCompList.data));
   } else {
-    yield put(repoLoadingError(repos.err));
+    yield put(fCompListLoadingError(fCompList.err));
   }
 }
 
-/**
- * Watches for LOAD_REPOS action and calls handler
- */
-export function* getReposWatcher() {
-  while (yield take(LOAD_REPOS)) {
-    yield call(getRepos);
+export function* getFCompListWatcher() {
+  while (yield take(LOAD_FCOMP_LIST)) {
+    yield call(getFCompList);
   }
 }
 
 /**
  * Root saga manages watcher lifecycle
  */
-export function* githubData() {
+export function* fCompListData() {
   // Fork watcher so we can continue execution
-  const watcher = yield fork(getReposWatcher);
+  const watcher = yield fork(getFCompListWatcher);
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
@@ -51,5 +48,5 @@ export function* githubData() {
 
 // Bootstrap sagas
 export default [
-  githubData,
+  fCompListData,
 ];

@@ -13,17 +13,12 @@ import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 
 import {
-  selectRepos,
+  selectFCompList,
   selectLoading,
   selectError,
-} from 'containers/App/selectors';
+} from '../../containers/App/selectors';
 
-import {
-  selectUsername,
-} from './selectors';
-
-import { changeUsername } from './actions';
-import { loadRepos } from '../App/actions';
+import { loadFCompList } from '../App/actions';
 
 import { FormattedMessage } from 'react-intl';
 import Button from 'components/Button';
@@ -34,10 +29,9 @@ export class HomePage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
+    this.props.onSubmitForm();
   }
+
   /**
    * Changes the route
    *
@@ -90,31 +84,28 @@ HomePage.propTypes = {
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  repos: React.PropTypes.oneOfType([
+  fCompList: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
   onSubmitForm: React.PropTypes.func,
-  username: React.PropTypes.string,
-  onChangeUsername: React.PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     changeRoute: (url) => dispatch(push(url)),
     onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
+      if (evt !== undefined && evt.preventDefault) {
+        evt.preventDefault();
+      }
+      dispatch(loadFCompList());
     },
-
     dispatch,
   };
 }
 
 const mapStateToProps = createStructuredSelector({
-  repos: selectRepos(),
-  username: selectUsername(),
+  fCompList: selectFCompList(),
   loading: selectLoading(),
   error: selectError(),
 });
