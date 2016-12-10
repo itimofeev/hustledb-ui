@@ -10,6 +10,7 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import messages from './messages';
+import { formatDate } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
@@ -22,7 +23,6 @@ import {
 import { loadFCompList } from '../App/actions';
 
 import { FormattedMessage } from 'react-intl';
-import Button from 'components/Button';
 
 
 export class HomePage extends React.Component {
@@ -42,18 +42,9 @@ export class HomePage extends React.Component {
     this.props.changeRoute(route);
   };
 
-  /**
-   * Changed route to '/dancers'
-   */
-  openDancersPage = () => {
-    this.openRoute('/dancers');
-  };
 
-  /**
-   * Changed route to '/competitions'
-   */
-  openCompetitionListPage = () => {
-    this.openRoute('/competitions');
+  onRawSelect = (event) => {
+    console.log(event)
   };
 
   render() {
@@ -62,18 +53,18 @@ export class HomePage extends React.Component {
 
     if (fCompList) {
       listRender = (
-        <Table selectable={false}>
+        <Table selectable onRowSelection={this.onRawSelect}>
           <TableHeader displaySelectAll={false}>
             <TableRow>
               <TableHeaderColumn><FormattedMessage {...messages.competitionTitle} /></TableHeaderColumn>
               <TableHeaderColumn><FormattedMessage {...messages.competitionDate} /></TableHeaderColumn>
             </TableRow>
           </TableHeader>
-          <TableBody displayRowCheckbox={false}>
+          <TableBody displayRowCheckbox={false} showRowHover>
             {fCompList.map((item, index) =>
-              <TableRow key={index}>
+              <TableRow key={item.id}>
                 <TableRowColumn>{item.title}</TableRowColumn>
-                <TableRowColumn>{item.date}</TableRowColumn>
+                <TableRowColumn>{formatDate(item.date)}</TableRowColumn>
               </TableRow>
             )}
           </TableBody>
@@ -86,18 +77,11 @@ export class HomePage extends React.Component {
         <Helmet
           title="Home Page"
           meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage' },
+            { name: 'description', content: 'Список всех соревнований' },
           ]}
         />
         <div>
           {listRender}
-
-          <Button handleRoute={this.openDancersPage}>
-            <FormattedMessage {...messages.dancersButton} />
-          </Button>
-          <Button handleRoute={this.openCompetitionListPage}>
-            <FormattedMessage {...messages.competitionsButton} />
-          </Button>
         </div>
       </article>
     );

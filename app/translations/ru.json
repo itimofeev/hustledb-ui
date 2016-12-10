@@ -1,5 +1,10 @@
 [
   {
+    "id": "vhustle.components.Footer.author.message",
+    "defaultMessage": "Автор: {author}",
+    "message": "Автор: {author}"
+  },
+  {
     "id": "vhustle.containers.HomePage.dancers.Button",
     "defaultMessage": "Танцоры",
     "message": "Танцоры"

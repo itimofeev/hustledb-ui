@@ -15,11 +15,6 @@
     "message": "Made with love by {author}."
   },
   {
-    "id": "boilerplate.components.Footer.license.message",
-    "defaultMessage": "This project is licensed under the MIT license.",
-    "message": "This project is licensed under the MIT license."
-  },
-  {
     "id": "boilerplate.containers.NotFoundPage.header",
     "defaultMessage": "Page not found.",
     "message": "Page not found."

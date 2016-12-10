@@ -19,9 +19,8 @@ export function* getFCompList() {
 
   const fCompList = yield call(request, requestURL);
 
-  console.log(fCompList);
-
   if (!fCompList.err) {
+    fCompList.data.forEach((fComp) => fComp.date = new Date(fComp.date));
     yield put(fCompListLoaded(fCompList.data));
   } else {
     yield put(fCompListLoadingError(fCompList.err));

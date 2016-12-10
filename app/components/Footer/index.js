@@ -10,9 +10,6 @@ function Footer() {
   return (
     <footer className={styles.footer}>
       <section>
-        <p>
-          <FormattedMessage {...messages.licenseMessage} />
-        </p>
       </section>
       <section>
         <LocaleToggle />
@@ -22,7 +19,7 @@ function Footer() {
           <FormattedMessage
             {...messages.authorMessage}
             values={{
-              author: <A href="https://twitter.com/mxstbr">Max Stoiber</A>,
+              author: <A href="https://vk.com/ilyaufo">Илья Тимофеев</A>,
             }}
           />
         </p>
