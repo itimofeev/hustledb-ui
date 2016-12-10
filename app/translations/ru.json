@@ -18,5 +18,10 @@
     "id": "vhustle.containers.HomePage.competitions.Date",
     "defaultMessage": "Дата",
     "message": "Дата"
+  },
+  {
+    "id": "vhustle.containers.HomePage.competitions.ErrorLoading",
+    "defaultMessage": "Произошла ошибка при загрузке списка соревнований",
+    "message": "Произошла ошибка при загрузке списка соревнований"
   }
 ]

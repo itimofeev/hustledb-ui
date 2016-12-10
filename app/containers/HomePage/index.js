@@ -50,6 +50,7 @@ export class HomePage extends React.Component {
   render() {
     const fCompList = this.props.fCompList;
     let listRender;
+    let errorRender;
 
     if (fCompList) {
       listRender = (
@@ -72,16 +73,21 @@ export class HomePage extends React.Component {
       );
     }
 
+    if (this.props.error) {
+      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />
+    }
+
     return (
       <article>
         <Helmet
-          title="Home Page"
+          title="Соревнования"
           meta={[
             { name: 'description', content: 'Список всех соревнований' },
           ]}
         />
         <div>
           {listRender}
+          {errorRender}
         </div>
       </article>
     );
