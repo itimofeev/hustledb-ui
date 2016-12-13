@@ -1,0 +1,27 @@
+[
+  {
+    "id": "vhustle.components.Footer.author.message",
+    "defaultMessage": "Автор: {author}",
+    "message": "Автор: {author}"
+  },
+  {
+    "id": "vhustle.containers.HomePage.dancers.Button",
+    "defaultMessage": "Танцоры",
+    "message": "Танцоры"
+  },
+  {
+    "id": "vhustle.containers.HomePage.competitions.Title",
+    "defaultMessage": "Название",
+    "message": "Название"
+  },
+  {
+    "id": "vhustle.containers.HomePage.competitions.Date",
+    "defaultMessage": "Дата",
+    "message": "Дата"
+  },
+  {
+    "id": "vhustle.containers.HomePage.competitions.ErrorLoading",
+    "defaultMessage": "Произошла ошибка при загрузке списка соревнований",
+    "message": "Произошла ошибка при загрузке списка соревнований"
+  }
+]

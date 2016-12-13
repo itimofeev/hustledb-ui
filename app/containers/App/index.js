@@ -12,7 +12,8 @@ import { AppBar } from 'material-ui';
 import { push } from 'react-router-redux';
 import { connect } from 'react-redux';
 import { createStructuredSelector } from 'reselect';
-
+import Footer from '../../components/Footer';
+import LinearProgress from 'material-ui/LinearProgress';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
@@ -27,8 +28,8 @@ function App(props) {
 
       <div className={styles.wrapper}>
         <Helmet
-          titleTemplate="%s | Hustle SA"
-          defaultTitle="Hustle SA"
+          titleTemplate="%s | VHustle"
+          defaultTitle="VHustle"
           meta={[
             { name: 'description', content: 'Hustle SA dancers rating' },
           ]}
@@ -36,11 +37,14 @@ function App(props) {
 
         <AppBar
           onTitleTouchTap={props.handleTitleTouchTap}
-          title="Hustle SA"
+          title="VHustle"
         />
-
+        {props.loading &&
+        <LinearProgress mode="indeterminate" />
+        }
         {React.Children.toArray(props.children)}
 
+        <Footer />
       </div>
 
     </MuiThemeProvider>
@@ -52,8 +56,7 @@ App.propTypes = {
   handleTitleTouchTap: React.PropTypes.func,
 };
 
-const mapStateToProps = createStructuredSelector({
-});
+const mapStateToProps = createStructuredSelector({});
 
 
 function mapDispatchToProps(dispatch) {

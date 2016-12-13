@@ -10,23 +10,19 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import messages from './messages';
+import { formatDate } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
+import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
 
 import {
-  selectRepos,
+  selectFCompList,
   selectLoading,
   selectError,
-} from 'containers/App/selectors';
+} from '../../containers/App/selectors';
 
-import {
-  selectUsername,
-} from './selectors';
-
-import { changeUsername } from './actions';
-import { loadRepos } from '../App/actions';
+import { loadFCompList } from '../App/actions';
 
 import { FormattedMessage } from 'react-intl';
-import Button from 'components/Button';
 
 
 export class HomePage extends React.Component {
@@ -34,10 +30,9 @@ export class HomePage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    if (this.props.username && this.props.username.trim().length > 0) {
-      this.props.onSubmitForm();
-    }
+    this.props.onSubmitForm();
   }
+
   /**
    * Changes the route
    *
@@ -47,36 +42,52 @@ export class HomePage extends React.Component {
     this.props.changeRoute(route);
   };
 
-  /**
-   * Changed route to '/dancers'
-   */
-  openDancersPage = () => {
-    this.openRoute('/dancers');
-  };
 
-  /**
-   * Changed route to '/competitions'
-   */
-  openCompetitionListPage = () => {
-    this.openRoute('/competitions');
+  onRawSelect = (event) => {
+    console.log(event)
   };
 
   render() {
+    const fCompList = this.props.fCompList;
+    let listRender;
+    let errorRender;
+
+    if (fCompList) {
+      listRender = (
+        <Table selectable onRowSelection={this.onRawSelect}>
+          <TableHeader displaySelectAll={false}>
+            <TableRow>
+              <TableHeaderColumn><FormattedMessage {...messages.competitionTitle} /></TableHeaderColumn>
+              <TableHeaderColumn><FormattedMessage {...messages.competitionDate} /></TableHeaderColumn>
+            </TableRow>
+          </TableHeader>
+          <TableBody displayRowCheckbox={false} showRowHover>
+            {fCompList.map((item, index) =>
+              <TableRow key={item.id}>
+                <TableRowColumn>{item.title}</TableRowColumn>
+                <TableRowColumn>{formatDate(item.date)}</TableRowColumn>
+              </TableRow>
+            )}
+          </TableBody>
+        </Table>
+      );
+    }
+
+    if (this.props.error) {
+      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />
+    }
+
     return (
       <article>
         <Helmet
-          title="Home Page"
+          title="Соревнования"
           meta={[
-            { name: 'description', content: 'A React.js Boilerplate application homepage' },
+            { name: 'description', content: 'Список всех соревнований' },
           ]}
         />
         <div>
-          <Button handleRoute={this.openDancersPage}>
-            <FormattedMessage {...messages.dancersButton} />
-          </Button>
-          <Button handleRoute={this.openCompetitionListPage}>
-            <FormattedMessage {...messages.competitionsButton} />
-          </Button>
+          {listRender}
+          {errorRender}
         </div>
       </article>
     );
@@ -90,31 +101,28 @@ HomePage.propTypes = {
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  repos: React.PropTypes.oneOfType([
+  fCompList: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
   onSubmitForm: React.PropTypes.func,
-  username: React.PropTypes.string,
-  onChangeUsername: React.PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
-    onChangeUsername: (evt) => dispatch(changeUsername(evt.target.value)),
     changeRoute: (url) => dispatch(push(url)),
     onSubmitForm: (evt) => {
-      if (evt !== undefined && evt.preventDefault) evt.preventDefault();
-      dispatch(loadRepos());
+      if (evt !== undefined && evt.preventDefault) {
+        evt.preventDefault();
+      }
+      dispatch(loadFCompList());
     },
-
     dispatch,
   };
 }
 
 const mapStateToProps = createStructuredSelector({
-  repos: selectRepos(),
-  username: selectUsername(),
+  fCompList: selectFCompList(),
   loading: selectLoading(),
   error: selectError(),
 });
