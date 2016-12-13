@@ -19,8 +19,12 @@ import {
   selectLoading,
   selectError,
 } from '../../containers/App/selectors';
+import {
+  selectSelectedCompetition,
+} from './selectors';
 
 import { loadFCompList } from '../App/actions';
+import { competitionSelected } from './actions';
 
 import { FormattedMessage } from 'react-intl';
 
@@ -44,13 +48,15 @@ export class HomePage extends React.Component {
 
 
   onRawSelect = (event) => {
-    console.log(event)
+    this.props.onCompetitionSelect(this.props.fCompList[event[0]])
   };
 
   render() {
     const fCompList = this.props.fCompList;
+    const selectedComp = this.props.selectedCompetition;
     let listRender;
     let errorRender;
+    let selectedCompetitionRender = "hi, there %)";
 
     if (fCompList) {
       listRender = (
@@ -77,6 +83,31 @@ export class HomePage extends React.Component {
       errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />
     }
 
+    if (selectedComp) {
+      selectedCompetitionRender = (
+        <table>
+          <tbody>
+          <tr>
+            <td>title</td>
+            <td>{selectedComp.title}</td>
+          </tr>
+          <tr>
+            <td>city</td>
+            <td>{selectedComp.city}</td>
+          </tr>
+          <tr>
+            <td>url</td>
+            <td>{selectedComp.url}</td>
+          </tr>
+          <tr>
+            <td>date</td>
+            <td>{formatDate(selectedComp.date)}</td>
+          </tr>
+          </tbody>
+        </table>
+      )
+    }
+
     return (
       <article>
         <Helmet
@@ -86,8 +117,19 @@ export class HomePage extends React.Component {
           ]}
         />
         <div>
-          {listRender}
-          {errorRender}
+          <table>
+            <tbody>
+            <tr>
+              <td style={{ width: '50%' }}>
+                {listRender}
+                {errorRender}
+              </td>
+              <td style={{ verticalAlign: 'top' }}>
+                {selectedCompetitionRender}
+              </td>
+            </tr>
+            </tbody>
+          </table>
         </div>
       </article>
     );
@@ -105,12 +147,18 @@ HomePage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
+  selectedCompetition: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
   onSubmitForm: React.PropTypes.func,
+  onCompetitionSelect: React.PropTypes.func,
 };
 
 function mapDispatchToProps(dispatch) {
   return {
     changeRoute: (url) => dispatch(push(url)),
+    onCompetitionSelect: (comp) => dispatch(competitionSelected(comp)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) {
         evt.preventDefault();
@@ -123,6 +171,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   fCompList: selectFCompList(),
+  selectedCompetition: selectSelectedCompetition(),
   loading: selectLoading(),
   error: selectError(),
 });

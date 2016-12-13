@@ -14,3 +14,12 @@
  *        return { type: YOUR_ACTION_CONSTANT, var: var }
  *    }
  */
+
+export const COMPETITION_SELECTED = 'app/HomePage/COMPETITION_SELECTED';
+
+export function competitionSelected(competition) {
+  return {
+    type: COMPETITION_SELECTED,
+    competition,
+  };
+}

@@ -12,12 +12,17 @@
 
 import { fromJS } from 'immutable';
 
+import { COMPETITION_SELECTED } from './actions';
+
 // The initial state of the App
 const initialState = fromJS({
+  selectedCompetition: false,
 });
 
 function homeReducer(state = initialState, action) {
   switch (action.type) {
+    case COMPETITION_SELECTED:
+      return state.set('selectedCompetition', action.competition);
     default:
       return state;
   }
