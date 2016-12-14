@@ -11,7 +11,13 @@ const selectSelectedCompetition = () => createSelector(
   (home) => home.get('selectedCompetition')
 );
 
+const selectSmallWidth = () => createSelector(
+  selectHome(),
+  (home) => home.get('smallWidth')
+);
+
 export {
   selectHome,
   selectSelectedCompetition,
+  selectSmallWidth,
 };

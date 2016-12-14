@@ -1,35 +1,22 @@
-.textSection {
-  margin: 3em auto;
+.container {
+  max-width: 100%;
+  height: 100%;
+  display: flex;
+  box-sizing: border-box;
 }
 
-.textSection:first-child {
-  margin-top: 0;
+.list {
+  flex: 1 1 auto;
+  height: 100%;
 }
 
-.centered {
-  text-align: center;
+.detail {
+  width: 300px;
+  height: 100%;
+  background-color: white;
 }
 
-p,
-label {
-  font-family: Georgia, Times, 'Times New Roman', serif;
-  line-height: 1.5em;
-}
-
-.link {
-  text-decoration: none;
-}
-
-.usernameForm {
-  margin-bottom: 1em;
-}
-
-.input {
-  outline: none;
-  border-bottom: 1px dotted #999;
-}
-
-.atPrefix {
-  color: black;
-  margin-left: 0.4em;
+.fullWidth {
+  width: 100%;
+  position: absolute;
 }
