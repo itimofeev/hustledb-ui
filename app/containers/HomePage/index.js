@@ -28,7 +28,7 @@ import {
 
 import { loadFCompList } from '../App/actions';
 import { competitionSelected, changeSmallWidth } from './actions';
-
+import MarkdownElement from 'react-material-markdown-element';
 import { FormattedMessage } from 'react-intl';
 
 export class HomePage extends React.Component {
