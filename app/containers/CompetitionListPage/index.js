@@ -11,7 +11,7 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import messages from './messages';
-import { formatDate } from '../../utils/util';
+import { formatDate, keywords } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
@@ -98,7 +98,8 @@ export class CompetitionListPage extends React.Component {
         <Helmet
           title="Соревнования"
           meta={[
-            { name: 'description', content: 'Список всех соревнований' },
+            { name: 'description', content: 'VHustle — портал с информацией о конкурсах по хастлу' },
+            { name: 'keywords', content: keywords },
           ]}
         />
 

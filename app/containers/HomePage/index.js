@@ -11,6 +11,7 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
+import { keywords } from '../../utils/util'
 
 
 export class HomePage extends React.Component {
@@ -21,8 +22,8 @@ export class HomePage extends React.Component {
         <Helmet
           title=""
           meta={[
-            { name: 'description', content: 'Список всех соревнований' },
-            { name: 'description', content: 'Список всех соревнований' },
+            { name: 'description', content: 'VHustle — портал с информацией о конкурсах по хастлу' },
+            { name: 'keywords', content: keywords },
           ]}
         />
 
