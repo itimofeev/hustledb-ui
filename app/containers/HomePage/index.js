@@ -12,7 +12,8 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { formatDate } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import Chip from 'material-ui/Chip';
 import styles from './styles.css';
 
 import {
@@ -29,7 +30,6 @@ import { loadFCompList } from '../App/actions';
 import { competitionSelected, changeSmallWidth } from './actions';
 
 import { FormattedMessage } from 'react-intl';
-
 
 export class HomePage extends React.Component {
   /**
@@ -73,59 +73,33 @@ export class HomePage extends React.Component {
     const selectedComp = this.props.selectedCompetition;
     let listRender;
     let errorRender;
-    let selectedCompetitionRender;
 
     if (fCompList) {
       listRender = (
-        <Table selectable onRowSelection={this.onRawSelect}>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn><FormattedMessage {...messages.competitionTitle} /></TableHeaderColumn>
-              <TableHeaderColumn><FormattedMessage {...messages.competitionDate} /></TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false} showRowHover>
-            {fCompList.map((item, index) =>
-              <TableRow key={item.id} selected={selectedComp && item.id == selectedComp.id}>
-                <TableRowColumn>{item.title}</TableRowColumn>
-                <TableRowColumn>{formatDate(item.date)}</TableRowColumn>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+        <div style={{ width: '100%' }}>
+          {fCompList.map((item, index) =>
+            <Card key={item.id}>
+              <CardHeader
+                title={item.title}
+                subtitle={formatDate(item.date)}
+                actAsExpander={true}
+                showExpandableButton={true}
+              />
+              <CardText expandable={true}>
+                <Chip>
+                  hello
+                </Chip>
+                Обсуждение: {item.url}
+              </CardText>
+            </Card>
+          )}
+        </div>
       );
     }
 
     if (this.props.error) {
       errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />
     }
-
-    if (selectedComp) {
-      selectedCompetitionRender = (
-        <table>
-          <tbody>
-          <tr>
-            <td>title</td>
-            <td>{selectedComp.title}</td>
-          </tr>
-          <tr>
-            <td>city</td>
-            <td>{selectedComp.city}</td>
-          </tr>
-          <tr>
-            <td>url</td>
-            <td>{selectedComp.url}</td>
-          </tr>
-          <tr>
-            <td>date</td>
-            <td>{formatDate(selectedComp.date)}</td>
-          </tr>
-          </tbody>
-        </table>
-      )
-    }
-
-    let detailStyles = styles.detail + (this.props.smallWidth ? ' ' + styles.fullWidth : '');
 
     return (
       <article>
@@ -135,14 +109,10 @@ export class HomePage extends React.Component {
             { name: 'description', content: 'Список всех соревнований' },
           ]}
         />
+
         <div className={styles.container}>
-          <div className={styles.list}>
             {listRender}
             {errorRender}
-          </div>
-          <div className={detailStyles}>
-            {selectedCompetitionRender}
-          </div>
         </div>
       </article>
     );

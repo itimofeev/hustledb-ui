@@ -14,14 +14,6 @@ export default defineMessages({
     id: 'vhustle.containers.HomePage.competitions.Button',
     defaultMessage: 'Competitions',
   },
-  competitionTitle: {
-    id: 'vhustle.containers.HomePage.competitions.Title',
-    defaultMessage: 'Title',
-  },
-  competitionDate: {
-    id: 'vhustle.containers.HomePage.competitions.Date',
-    defaultMessage: 'Date',
-  },
   errorLoadingCompetitions: {
     id: 'vhustle.containers.HomePage.competitions.ErrorLoading',
     defaultMessage: 'Error loading competitions list',
