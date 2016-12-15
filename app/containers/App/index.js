@@ -39,9 +39,7 @@ function App(props) {
           onTitleTouchTap={props.handleTitleTouchTap}
           title="VHustle"
         />
-        {props.loading &&
-        <LinearProgress mode="indeterminate" />
-        }
+        {props.loading && <LinearProgress mode="indeterminate" />}
         {React.Children.toArray(props.children)}
 
         <Footer />
@@ -54,6 +52,7 @@ function App(props) {
 App.propTypes = {
   children: React.PropTypes.node,
   handleTitleTouchTap: React.PropTypes.func,
+  loading: React.PropTypes.bool,
 };
 
 const mapStateToProps = createStructuredSelector({});

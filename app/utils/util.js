@@ -8,6 +8,6 @@ export function formatDate(date) {
   return date.toLocaleDateString('ru', {
     day: 'numeric',
     month: 'short',
-    year: 'numeric'
+    year: 'numeric',
   });
 }

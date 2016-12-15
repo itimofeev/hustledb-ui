@@ -12,7 +12,7 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { formatDate } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
-import { Card, CardActions, CardHeader, CardText } from 'material-ui/Card';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
 import Chip from 'material-ui/Chip';
 import styles from './styles.css';
 
@@ -23,12 +23,12 @@ import {
 } from '../../containers/App/selectors';
 import {
   selectSelectedCompetition,
-  selectSmallWidth
+  selectSmallWidth,
 } from './selectors';
 
 import { loadFCompList } from '../App/actions';
 import { competitionSelected, changeSmallWidth } from './actions';
-import MarkdownElement from 'react-material-markdown-element';
+// import MarkdownElement from 'react-material-markdown-element';
 import { FormattedMessage } from 'react-intl';
 
 export class HomePage extends React.Component {
@@ -37,32 +37,22 @@ export class HomePage extends React.Component {
    */
   componentDidMount() {
     this.props.onSubmitForm();
-    let that = this;
+    const that = this;
 
     this.resizeListener = function () {
       if (!that.props.smallWidth && window.innerWidth < 600) {
-        that.props.changeSmallWidth(true)
+        that.props.changeSmallWidth(true);
       } else if (that.props.smallWidth && window.innerWidth > 600) {
-        that.props.changeSmallWidth(false)
+        that.props.changeSmallWidth(false);
       }
     };
 
-    window.addEventListener('resize', this.resizeListener)
+    window.addEventListener('resize', this.resizeListener);
   }
 
   componentWillUnmount() {
-    window.removeEventListener('resize', this.resizeListener)
+    window.removeEventListener('resize', this.resizeListener);
   }
-
-  /**
-   * Changes the route
-   *
-   * @param  {string} route The route we want to go to
-   */
-  openRoute = (route) => {
-    this.props.changeRoute(route);
-  };
-
 
   onRawSelect = (event) => {
     this.props.onCompetitionSelect(this.props.fCompList[event[0]]);
@@ -70,22 +60,22 @@ export class HomePage extends React.Component {
 
   render() {
     const fCompList = this.props.fCompList;
-    const selectedComp = this.props.selectedCompetition;
+    // const selectedComp = this.props.selectedCompetition;
     let listRender;
     let errorRender;
 
     if (fCompList) {
       listRender = (
         <div style={{ width: '100%' }}>
-          {fCompList.map((item, index) =>
+          {fCompList.map((item) =>
             <Card key={item.id}>
               <CardHeader
                 title={item.title}
                 subtitle={formatDate(item.date)}
-                actAsExpander={true}
-                showExpandableButton={true}
+                actAsExpander
+                showExpandableButton
               />
-              <CardText expandable={true}>
+              <CardText expandable>
                 <Chip>
                   hello
                 </Chip>
@@ -98,7 +88,7 @@ export class HomePage extends React.Component {
     }
 
     if (this.props.error) {
-      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />
+      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />;
     }
 
     return (

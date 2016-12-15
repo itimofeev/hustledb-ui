@@ -1,6 +1,5 @@
 .container {
-  -webkit-transition: .35s;
-  transition: .35s;
+  transition: 0.35s;
   max-width: 1050px;
   width: calc(100% - 50px);
   box-sizing: border-box;
