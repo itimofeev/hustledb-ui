@@ -7,8 +7,8 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
 
-  errorLoadingCompetitions: {
-    id: 'vhustle.containers.HomePage.competitions.ErrorLoading',
-    defaultMessage: 'Error loading competitions list',
+  helloMessage: {
+    id: 'vhustle.containers.HomePage.helloMessage',
+    defaultMessage: 'Hello, there!',
   },
 });

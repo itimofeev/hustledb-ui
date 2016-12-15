@@ -10,14 +10,9 @@
     "message": "Танцоры"
   },
   {
-    "id": "vhustle.containers.HomePage.competitions.Title",
-    "defaultMessage": "Название",
-    "message": "Название"
-  },
-  {
-    "id": "vhustle.containers.HomePage.competitions.Date",
-    "defaultMessage": "Дата",
-    "message": "Дата"
+    "id": "vhustle.containers.HomePage.helloMessage",
+    "defaultMessage": "Приветствуем на нашем сайте",
+    "message": "Приветствуем на нашем сайте"
   },
   {
     "id": "vhustle.containers.HomePage.competitions.ErrorLoading",

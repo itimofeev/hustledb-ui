@@ -11,10 +11,11 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { createStructuredSelector } from 'reselect';
 import styles from './styles.css';
-import { keywords } from '../../utils/util'
+import { keywords } from '../../utils/util';
+import { FormattedMessage } from 'react-intl';
 
 
-export class HomePage extends React.Component {
+export class HomePage extends React.Component {// eslint-disable-line
 
   render() {
     return (
@@ -28,7 +29,7 @@ export class HomePage extends React.Component {
         />
 
         <div className={styles.container}>
-          hello, tther!
+          <FormattedMessage {...messages.helloMessage} />;
         </div>
       </article>
     );
