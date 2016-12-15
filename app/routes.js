@@ -39,46 +39,6 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/dancers',
-      name: 'dancersPage',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/DancersPage/reducer'),
-          System.import('containers/DancersPage/sagas'),
-          System.import('containers/DancersPage'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('dancersPage', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
-      path: '/dancers/:dancerId',
-      name: 'dancerProfile',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/DancerProfile/reducer'),
-          System.import('containers/DancerProfile/sagas'),
-          System.import('containers/DancerProfile'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('dancerProfile', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
       path: '/competitions',
       name: 'competitionList',
       getComponent(nextState, cb) {
@@ -92,26 +52,6 @@ export default function createRoutes(store) {
 
         importModules.then(([reducer, sagas, component]) => {
           injectReducer('competitionList', reducer.default);
-          injectSagas(sagas.default);
-          renderRoute(component);
-        });
-
-        importModules.catch(errorLoading);
-      },
-    }, {
-      path: '/competitions/:competitionId',
-      name: 'competitionPage',
-      getComponent(nextState, cb) {
-        const importModules = Promise.all([
-          System.import('containers/CompetitionPage/reducer'),
-          System.import('containers/CompetitionPage/sagas'),
-          System.import('containers/CompetitionPage'),
-        ]);
-
-        const renderRoute = loadModule(cb);
-
-        importModules.then(([reducer, sagas, component]) => {
-          injectReducer('competitionPage', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });

@@ -1,7 +1,7 @@
 import { createSelector } from 'reselect';
 
 /**
- * Direct selector to the competitionList state domain
+ * Direct selector to the competitionListPage state domain
  */
 const selectCompetitionListDomain = () => state => state.get('competitionList');
 
@@ -9,11 +9,15 @@ const selectCompetitionListDomain = () => state => state.get('competitionList');
  * Other specific selectors
  */
 
-const selectCompetitionListProp = () => createSelector(
+const selectSelectedCompetition = () => createSelector(
   selectCompetitionListDomain(),
-  (substate) => substate.get('competitionList')
+  (substate) => substate.get('selectedCompetition')
 );
 
+const selectSmallWidth = () => createSelector(
+  selectCompetitionListDomain(),
+  (substate) => substate.get('smallWidth')
+);
 /**
  * Default selector used by CompetitionListPage
  */
@@ -26,5 +30,6 @@ const selectCompetitionList = () => createSelector(
 export default selectCompetitionList;
 export {
   selectCompetitionListDomain,
-  selectCompetitionListProp,
+  selectSmallWidth,
+  selectSelectedCompetition,
 };

@@ -1,26 +1,25 @@
 /*
  *
- * CompetitionList reducer
+ * CompetitionListPage reducer
  *
  */
 
 import { fromJS } from 'immutable';
-import {
-  LOAD_COMPETITION_LIST_SUCCESS, LOAD_COMPETITION_LIST_ERROR,
-} from './constants';
 
+import { COMPETITION_SELECTED, CHANGE_SMALL_WIDTH } from './actions';
+
+// The initial state of the App
 const initialState = fromJS({
-  competitionList: false,
+  selectedCompetition: false,
+  smallWidth: window.innerWidth < 600,
 });
 
 function competitionListReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_COMPETITION_LIST_SUCCESS:
-      return state
-        .set('competitionList', action.competitionList);
-    case LOAD_COMPETITION_LIST_ERROR:
-      return state
-        .set('error', action.error);
+    case COMPETITION_SELECTED:
+      return state.set('selectedCompetition', action.competition);
+    case CHANGE_SMALL_WIDTH:
+      return state.set('smallWidth', action.smallWidth);
     default:
       return state;
   }

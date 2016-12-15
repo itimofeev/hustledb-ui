@@ -1,44 +1,21 @@
 /*
  *
- * CompetitionList actions
+ * CompetitionListPage actions
  *
  */
+export const COMPETITION_SELECTED = 'app/HomePage/COMPETITION_SELECTED';
+export const CHANGE_SMALL_WIDTH = 'app/HomePage/CHANGE_SMALL_WIDTH';
 
-import {
-  LOAD_COMPETITION_LIST, LOAD_COMPETITION_LIST_SUCCESS, LOAD_COMPETITION_LIST_ERROR,
-} from './constants';
-
-export function loadCompetitionList() {
+export function competitionSelected(competition) {
   return {
-    type: LOAD_COMPETITION_LIST,
+    type: COMPETITION_SELECTED,
+    competition,
   };
 }
 
-
-/**
- * Dispatched when the competition list are loaded by the request saga
- *
- * @param  {array} competitionList The competition list data
- *
- * @return {object}      An action object with a type of LOAD_DANCER_PROFILE_SUCCESS passing the dancer profile
- */
-export function competitionListLoaded(competitionList) {
+export function changeSmallWidth(smallWidth) {
   return {
-    type: LOAD_COMPETITION_LIST_SUCCESS,
-    competitionList,
-  };
-}
-
-/**
- * Dispatched when loading the competition list fails
- *
- * @param  {object} error The error
- *
- * @return {object}       An action object with a type of LOAD_COMPETITION_LIST_ERROR passing the error
- */
-export function competitionListLoadingError(error) {
-  return {
-    type: LOAD_COMPETITION_LIST_ERROR,
-    error,
+    type: CHANGE_SMALL_WIDTH,
+    smallWidth,
   };
 }

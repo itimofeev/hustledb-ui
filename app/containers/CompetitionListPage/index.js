@@ -1,95 +1,159 @@
 /*
  *
- * CompetitionList
+ * CompetitionListPage
  *
  */
 
+
 import React from 'react';
 import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
-import { selectCompetitionListProp } from './selectors';
-import styles from './styles.css';
-import { createStructuredSelector } from 'reselect';
-import { loadCompetitionList } from './actions';
 import { push } from 'react-router-redux';
+import Helmet from 'react-helmet';
 
-import { Table, TableBody, TableHeader, TableHeaderColumn, TableRow, TableRowColumn } from 'material-ui/Table';
+import messages from './messages';
+import { formatDate } from '../../utils/util';
+import { createStructuredSelector } from 'reselect';
+import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Chip from 'material-ui/Chip';
+import styles from './styles.css';
 
+import {
+  selectFCompList,
+  selectLoading,
+  selectError,
+} from '../../containers/App/selectors';
 
-export class CompetitionList extends React.Component { // eslint-disable-line react/prefer-stateless-function
+import {
+  selectSelectedCompetition,
+  selectSmallWidth,
+} from './selectors';
 
+import { loadFCompList } from '../App/actions';
+import { competitionSelected, changeSmallWidth } from './actions';
+// import MarkdownElement from 'react-material-markdown-element';
+import { FormattedMessage } from 'react-intl';
+
+export class CompetitionListPage extends React.Component {
   /**
-   * call action to load dancer profile
+   * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    this.props.loadCompetitionList();
+    this.props.onSubmitForm();
+    const that = this;
+
+    this.resizeListener = function () {
+      if (!that.props.smallWidth && window.innerWidth < 600) {
+        that.props.changeSmallWidth(true);
+      } else if (that.props.smallWidth && window.innerWidth > 600) {
+        that.props.changeSmallWidth(false);
+      }
+    };
+
+    window.addEventListener('resize', this.resizeListener);
   }
 
-  openCompetitionPage = (id) => {
-    this.props.changeRoute(`/competitions/${id}`);
+  componentWillUnmount() {
+    window.removeEventListener('resize', this.resizeListener);
+  }
+
+  onRawSelect = (event) => {
+    this.props.onCompetitionSelect(this.props.fCompList[event[0]]);
   };
 
   render() {
-    const competitionList = this.props.competitionList;
-
+    const fCompList = this.props.fCompList;
+    // const selectedComp = this.props.selectedCompetition;
     let listRender;
+    let errorRender;
 
-    if (competitionList) {
+    if (fCompList) {
       listRender = (
-        <Table selectable={false}>
-          <TableHeader displaySelectAll={false}>
-            <TableRow>
-              <TableHeaderColumn>Date</TableHeaderColumn>
-              <TableHeaderColumn>Name</TableHeaderColumn>
-            </TableRow>
-          </TableHeader>
-          <TableBody displayRowCheckbox={false}>
-            {competitionList.content.map((item, index) =>
-              <TableRow key={index}>
-                <TableRowColumn>{item.Date}</TableRowColumn>
-                <TableRowColumn>
-                  <a onClick={() => this.openCompetitionPage(item.id)}>{item.title}</a>
-                </TableRowColumn>
-              </TableRow>
-            )}
-          </TableBody>
-        </Table>
+        <div style={{ width: '100%' }}>
+          {fCompList.map((item) =>
+            <Card key={item.id}>
+              <CardHeader
+                title={item.title}
+                subtitle={formatDate(item.date)}
+                actAsExpander
+                showExpandableButton
+              />
+              <CardText expandable>
+                <Chip>
+                  hello
+                </Chip>
+                Обсуждение: {item.url}
+              </CardText>
+            </Card>
+          )}
+        </div>
       );
     }
 
+    if (this.props.error) {
+      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />;
+    }
+
     return (
-      <div className={styles.competitionList}>
+      <article>
         <Helmet
-          title="CompetitionList"
+          title="Соревнования"
           meta={[
-            { name: 'description', content: 'Description of CompetitionList' },
+            { name: 'description', content: 'Список всех соревнований' },
           ]}
         />
-        {listRender}
-      </div>
+
+        <div className={styles.container}>
+          {listRender}
+          {errorRender}
+        </div>
+      </article>
     );
   }
 }
 
-CompetitionList.propTypes = {
-  competitionList: React.PropTypes.oneOfType([
+CompetitionListPage.propTypes = {
+  changeRoute: React.PropTypes.func,
+  loading: React.PropTypes.bool,
+  error: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  loadCompetitionList: React.PropTypes.func,
-  changeRoute: React.PropTypes.func,
+  fCompList: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.bool,
+  ]),
+  selectedCompetition: React.PropTypes.oneOfType([
+    React.PropTypes.object,
+    React.PropTypes.bool,
+  ]),
+  onSubmitForm: React.PropTypes.func,
+  changeSmallWidth: React.PropTypes.func,
+  onCompetitionSelect: React.PropTypes.func,
+  smallWidth: React.PropTypes.bool,
 };
-
-const mapStateToProps = createStructuredSelector({
-  competitionList: selectCompetitionListProp(),
-});
 
 function mapDispatchToProps(dispatch) {
   return {
-    dispatch,
-    loadCompetitionList: () => dispatch(loadCompetitionList()),
     changeRoute: (url) => dispatch(push(url)),
+    changeSmallWidth: (smallWidth) => dispatch(changeSmallWidth(smallWidth)),
+    onCompetitionSelect: (comp) => dispatch(competitionSelected(comp)),
+    onSubmitForm: (evt) => {
+      if (evt !== undefined && evt.preventDefault) {
+        evt.preventDefault();
+      }
+      dispatch(loadFCompList());
+    },
+    dispatch,
   };
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(CompetitionList);
+const mapStateToProps = createStructuredSelector({
+  fCompList: selectFCompList(),
+  smallWidth: selectSmallWidth(),
+  selectedCompetition: selectSelectedCompetition(),
+  loading: selectLoading(),
+  error: selectError(),
+});
+
+// Wrap the component to inject dispatch and state into it
+export default connect(mapStateToProps, mapDispatchToProps)(CompetitionListPage);

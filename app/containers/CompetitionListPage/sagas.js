@@ -1,48 +1,44 @@
-import { take, call, put, cancel, fork } from 'redux-saga/effects';
-import { takeEvery } from 'redux-saga';
+import { take, call, put, fork, cancel } from 'redux-saga/effects';
 import { LOCATION_CHANGE } from 'react-router-redux';
-import { LOAD_COMPETITION_LIST } from './constants';
+import { fCompListLoaded, fCompListLoadingError, LOAD_FCOMP_LIST } from '../../containers/App/actions';
+
 import request from 'utils/request';
 
-import { competitionListLoaded, competitionListLoadingError } from './actions';
+export function* getFCompList() {
+  // const username = yield select(selectUsername());
+  const requestURL = '/api/v1/forum/competitions';
 
+  const fCompList = yield call(request, requestURL);
 
-/**
- * Competition list request/response handler
- */
-export function* getCompetitionList() {
-  const requestURL = '/api/v1/competitions';
-
-  // Call our request helper (see 'utils/request')
-  const competitionList = yield call(request, requestURL);
-
-  if (!competitionList.err) {
-    yield put(competitionListLoaded(competitionList.data));
+  if (!fCompList.err) {
+    fCompList.data.forEach((fComp) => {
+      fComp.date = new Date(fComp.date);// eslint-disable-line
+    });
+    yield put(fCompListLoaded(fCompList.data));
   } else {
-    yield put(competitionListLoadingError(competitionList.err));
+    yield put(fCompListLoadingError(fCompList.err));
   }
 }
 
-/**
- * Watches for LOAD_COMPETITION_LIST action and calls handler
- */
-export function* getCompetitionListWatcher() {
-  yield* takeEvery(LOAD_COMPETITION_LIST, getCompetitionList);
+export function* getFCompListWatcher() {
+  while (yield take(LOAD_FCOMP_LIST)) {
+    yield call(getFCompList);
+  }
 }
 
 /**
  * Root saga manages watcher lifecycle
  */
-export function* competitionListData() {
+export function* fCompListData() {
   // Fork watcher so we can continue execution
-  const watcher = yield fork(getCompetitionListWatcher);
+  const watcher = yield fork(getFCompListWatcher);
 
   // Suspend execution until location changes
   yield take(LOCATION_CHANGE);
   yield cancel(watcher);
 }
 
-// All sagas to be loaded
+// Bootstrap sagas
 export default [
-  competitionListData,
+  fCompListData,
 ];
