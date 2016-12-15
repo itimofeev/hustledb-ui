@@ -17,6 +17,7 @@ import LinearProgress from 'material-ui/LinearProgress';
 
 // Import the CSS reset, which HtmlWebpackPlugin transfers to the build folder
 import 'sanitize.css/sanitize.css';
+import { Initializer as YM } from 'react-yandex-metrika';
 
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 
@@ -43,6 +44,9 @@ function App(props) {
         {React.Children.toArray(props.children)}
 
         <Footer />
+
+        <YM />
+
       </div>
 
     </MuiThemeProvider>

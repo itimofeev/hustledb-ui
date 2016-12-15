@@ -74,6 +74,19 @@ const history = syncHistoryWithStore(browserHistory, store, {
   selectLocationState: selectLocationState(),
 });
 
+// Setting up Google-Analytics
+import ReactGA from 'react-ga';
+ReactGA.initialize('UA-89004750-1');
+
+function logPageView() {
+  ReactGA.set({ page: window.location.pathname });
+  ReactGA.pageview(window.location.pathname);
+}
+
+// Setting up Yandex-metrika. YM component is used in ./containers/App/index.js as well
+ym.init([41629649]); // eslint-disable-line
+
+
 // Set up the router, wrapping all Routes in the App component
 import App from 'containers/App';
 import createRoutes from './routes';
@@ -89,6 +102,7 @@ const render = (translatedMessages) => {
         <Router
           history={history}
           routes={rootRoute}
+          onUpdate={logPageView}
           render={
             // Scroll to top when going to a new page, imitating default browser
             // behaviour
