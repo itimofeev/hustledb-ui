@@ -21,6 +21,11 @@ const selectFCompList = () => createSelector(
   (globalState) => globalState.get('fCompList')
 );
 
+const selectIsDrawerOpen = () => createSelector(
+  selectGlobal(),
+  (globalState) => globalState.get('isDrawerOpen')
+);
+
 const selectLocationState = () => {
   let prevRoutingState;
   let prevRoutingStateJS;
@@ -43,4 +48,5 @@ export {
   selectLoading,
   selectError,
   selectLocationState,
+  selectIsDrawerOpen,
 };

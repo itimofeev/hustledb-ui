@@ -19,6 +19,7 @@
 export const LOAD_FCOMP_LIST = 'vhustle/App/LOAD_FCOMP_LIST';
 export const LOAD_FCOMP_LIST_SUCCESS = 'vhustle/App/LOAD_FCOMP_LIST_SUCCESS';
 export const LOAD_FCOMP_LIST_ERROR = 'vhustle/App/LOAD_FCOMP_LIST_ERROR';
+export const DRAWER_OPEN_SET_STATUS = 'vhustle/App/DRAWER_OPEN_SET_STATUS';
 
 export function loadFCompList() {
   return {
@@ -37,5 +38,18 @@ export function fCompListLoadingError(error) {
   return {
     type: LOAD_FCOMP_LIST_ERROR,
     error,
+  };
+}
+
+export function openDrawer() {
+  return {
+    type: DRAWER_OPEN_SET_STATUS,
+    isDrawerOpen: true,
+  };
+}
+export function closeDrawer() {
+  return {
+    type: DRAWER_OPEN_SET_STATUS,
+    isDrawerOpen: false,
   };
 }

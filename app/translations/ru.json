@@ -5,18 +5,28 @@
     "message": "Автор: {author}"
   },
   {
-    "id": "vhustle.containers.HomePage.dancers.Button",
-    "defaultMessage": "Танцоры",
-    "message": "Танцоры"
-  },
-  {
     "id": "vhustle.containers.HomePage.helloMessage",
-    "defaultMessage": "Приветствуем на нашем сайте",
-    "message": "Приветствуем на нашем сайте"
+    "defaultMessage": "Приветствуем на портале VHustle, посвящённому хастлу в целом и конкурсам в частности!",
+    "message": "Приветствуем на портале VHustle, посвящённому хастлу в целом и конкурсам в частности!"
   },
   {
     "id": "vhustle.containers.HomePage.competitions.ErrorLoading",
     "defaultMessage": "Произошла ошибка при загрузке списка соревнований",
     "message": "Произошла ошибка при загрузке списка соревнований"
+  },
+  {
+    "id": "app.components.LocaleToggle.ru",
+    "defaultMessage": "Ру",
+    "message": "Ру"
+  },
+  {
+    "id": "app.components.LocaleToggle.en",
+    "defaultMessage": "En",
+    "message": "En"
+  },
+  {
+    "id": "vhustle.containers.App.goToCompetitionsMI",
+    "defaultMessage": "Конкурсы",
+    "message": "Конкурсы"
   }
 ]

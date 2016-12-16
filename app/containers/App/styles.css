@@ -26,3 +26,12 @@ body.fontLoaded {
   min-height: 100%;
   flex-direction: column;
 }
+
+.title {
+  cursor: pointer;
+}
+
+/* override style from sanitize css because it fails some buttons appearance (MenuItems and Chips) */
+html [type='button'] {
+  -webkit-appearance: inherit !important;
+}

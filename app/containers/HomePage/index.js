@@ -29,7 +29,7 @@ export class HomePage extends React.Component {// eslint-disable-line
         />
 
         <div className={styles.container}>
-          <FormattedMessage {...messages.helloMessage} />;
+          <FormattedMessage {...messages.helloMessage} />
         </div>
       </article>
     );

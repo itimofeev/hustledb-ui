@@ -14,6 +14,7 @@ import {
   LOAD_FCOMP_LIST_SUCCESS,
   LOAD_FCOMP_LIST,
   LOAD_FCOMP_LIST_ERROR,
+  DRAWER_OPEN_SET_STATUS,
 } from './actions';
 
 import { fromJS } from 'immutable';
@@ -23,6 +24,7 @@ const initialState = fromJS({
   loading: false,
   error: false,
   fCompList: false,
+  isDrawerOpen: false,
 });
 
 function appReducer(state = initialState, action) {
@@ -41,6 +43,9 @@ function appReducer(state = initialState, action) {
       return state
         .set('error', action.error)
         .set('loading', false);
+    case DRAWER_OPEN_SET_STATUS:
+      return state
+        .set('isDrawerOpen', action.isDrawerOpen);
     default:
       return state;
   }
