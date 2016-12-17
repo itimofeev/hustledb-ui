@@ -1,6 +1,6 @@
 /*
  *
- * CompetitionListPage
+ * ContestListPage
  *
  */
 
@@ -14,26 +14,27 @@ import messages from './messages';
 import { formatDate, keywords } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
+import CircularProgress from 'material-ui/CircularProgress';
 import Chip from 'material-ui/Chip';
 import styles from './styles.css';
 
 import {
-  selectFCompList,
+  selectContestList,
   selectLoading,
   selectError,
 } from '../../containers/App/selectors';
 
 import {
-  selectSelectedCompetition,
+  selectSelectedContest,
   selectSmallWidth,
 } from './selectors';
 
-import { loadFCompList } from '../App/actions';
-import { competitionSelected, changeSmallWidth } from './actions';
+import { loadContestList } from '../App/actions';
+import { contestSelected, changeSmallWidth } from './actions';
 // import MarkdownElement from 'react-material-markdown-element';
 import { FormattedMessage } from 'react-intl';
 
-export class CompetitionListPage extends React.Component {
+export class ContestListPage extends React.Component {
   /**
    * when initial state username is not null, submit the form to load repos
    */
@@ -57,19 +58,34 @@ export class CompetitionListPage extends React.Component {
   }
 
   onRawSelect = (event) => {
-    this.props.onCompetitionSelect(this.props.fCompList[event[0]]);
+    this.props.onContestSelect(this.props.contestList[event[0]]);
+  };
+
+  handleChipTouchTap = (year) => {
   };
 
   render() {
-    const fCompList = this.props.fCompList;
-    // const selectedComp = this.props.selectedCompetition;
-    let listRender;
-    let errorRender;
+    const inStyles = {
+      chip: {
+        margin: 4,
+      },
+      wrapper: {
+        display: 'flex',
+        flexWrap: 'wrap',
+      },
+    };
 
-    if (fCompList) {
+    const contestList = this.props.contestList;
+    // const selectedComp = this.props.selectedContest;
+    let listRender;
+    let loadingRender;
+    let errorRender;
+    let contestFilterRender;
+
+    if (contestList) {
       listRender = (
         <div style={{ width: '100%' }}>
-          {fCompList.map((item) =>
+          {contestList.map((item) =>
             <Card key={item.id}>
               <CardHeader
                 title={item.title}
@@ -87,10 +103,31 @@ export class CompetitionListPage extends React.Component {
           )}
         </div>
       );
+
+      contestFilterRender = (
+        <div style={inStyles.wrapper}>
+          <Chip
+            style={styles.chip}
+          >
+            2016
+          </Chip>
+          <Chip
+            style={styles.chip}
+          >
+            2017
+          </Chip>
+        </div>
+      )
+    }
+
+    if (this.props.loading) {
+      loadingRender = (
+        <CircularProgress size={80} thickness={5} />
+      )
     }
 
     if (this.props.error) {
-      errorRender = <FormattedMessage {...messages.errorLoadingCompetitions} />;
+      errorRender = <FormattedMessage {...messages.errorLoadingContestList} />;
     }
 
     return (
@@ -104,32 +141,34 @@ export class CompetitionListPage extends React.Component {
         />
 
         <div className={styles.container}>
+          {contestFilterRender}
           {listRender}
           {errorRender}
+          {loadingRender}
         </div>
       </article>
     );
   }
 }
 
-CompetitionListPage.propTypes = {
+ContestListPage.propTypes = {
   changeRoute: React.PropTypes.func,
   loading: React.PropTypes.bool,
   error: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
-  fCompList: React.PropTypes.oneOfType([
+  contestList: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  selectedCompetition: React.PropTypes.oneOfType([
+  selectedContest: React.PropTypes.oneOfType([
     React.PropTypes.object,
     React.PropTypes.bool,
   ]),
   onSubmitForm: React.PropTypes.func,
   changeSmallWidth: React.PropTypes.func,
-  onCompetitionSelect: React.PropTypes.func,
+  onContestSelect: React.PropTypes.func,
   smallWidth: React.PropTypes.bool,
 };
 
@@ -137,24 +176,24 @@ function mapDispatchToProps(dispatch) {
   return {
     changeRoute: (url) => dispatch(push(url)),
     changeSmallWidth: (smallWidth) => dispatch(changeSmallWidth(smallWidth)),
-    onCompetitionSelect: (comp) => dispatch(competitionSelected(comp)),
+    onContestSelect: (comp) => dispatch(contestSelected(comp)),
     onSubmitForm: (evt) => {
       if (evt !== undefined && evt.preventDefault) {
         evt.preventDefault();
       }
-      dispatch(loadFCompList());
+      dispatch(loadContestList());
     },
     dispatch,
   };
 }
 
 const mapStateToProps = createStructuredSelector({
-  fCompList: selectFCompList(),
+  contestList: selectContestList(),
   smallWidth: selectSmallWidth(),
-  selectedCompetition: selectSelectedCompetition(),
+  selectedContest: selectSelectedContest(),
   loading: selectLoading(),
   error: selectError(),
 });
 
 // Wrap the component to inject dispatch and state into it
-export default connect(mapStateToProps, mapDispatchToProps)(CompetitionListPage);
+export default connect(mapStateToProps, mapDispatchToProps)(ContestListPage);

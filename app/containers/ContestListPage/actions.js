@@ -1,15 +1,15 @@
 /*
  *
- * CompetitionListPage actions
+ * ContestListPage actions
  *
  */
-export const COMPETITION_SELECTED = 'app/HomePage/COMPETITION_SELECTED';
+export const CONTEST_SELECTED = 'app/HomePage/CONTEST_SELECTED';
 export const CHANGE_SMALL_WIDTH = 'app/HomePage/CHANGE_SMALL_WIDTH';
 
-export function competitionSelected(competition) {
+export function contestSelected(contest) {
   return {
-    type: COMPETITION_SELECTED,
-    competition,
+    type: CONTEST_SELECTED,
+    contest,
   };
 }
 

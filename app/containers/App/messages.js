@@ -7,8 +7,8 @@ import { defineMessages } from 'react-intl';
 
 export default defineMessages({
 
-  competitionsMI: {
-    id: 'vhustle.containers.App.goToCompetitionsMI',
-    defaultMessage: 'Competitions',
+  contestListMI: {
+    id: 'vhustle.containers.App.goToContestListMI',
+    defaultMessage: 'Contests',
   },
 });

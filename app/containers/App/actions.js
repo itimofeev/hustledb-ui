@@ -16,27 +16,27 @@
  */
 
 
-export const LOAD_FCOMP_LIST = 'vhustle/App/LOAD_FCOMP_LIST';
-export const LOAD_FCOMP_LIST_SUCCESS = 'vhustle/App/LOAD_FCOMP_LIST_SUCCESS';
-export const LOAD_FCOMP_LIST_ERROR = 'vhustle/App/LOAD_FCOMP_LIST_ERROR';
+export const LOAD_CONTEST_LIST = 'vhustle/App/LOAD_CONTEST_LIST';
+export const LOAD_CONTEST_LIST_SUCCESS = 'vhustle/App/LOAD_CONTEST_LIST_SUCCESS';
+export const LOAD_CONTEST_LIST_ERROR = 'vhustle/App/LOAD_CONTEST_LIST_ERROR';
 export const DRAWER_OPEN_SET_STATUS = 'vhustle/App/DRAWER_OPEN_SET_STATUS';
 
-export function loadFCompList() {
+export function loadContestList() {
   return {
-    type: LOAD_FCOMP_LIST,
+    type: LOAD_CONTEST_LIST,
   };
 }
 
-export function fCompListLoaded(fCompList) {
+export function fContestListLoaded(contestList) {
   return {
-    type: LOAD_FCOMP_LIST_SUCCESS,
-    fCompList,
+    type: LOAD_CONTEST_LIST_SUCCESS,
+    contestList,
   };
 }
 
-export function fCompListLoadingError(error) {
+export function fContestListLoadingError(error) {
   return {
-    type: LOAD_FCOMP_LIST_ERROR,
+    type: LOAD_CONTEST_LIST_ERROR,
     error,
   };
 }

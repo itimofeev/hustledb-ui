@@ -11,9 +11,9 @@
  */
 
 import {
-  LOAD_FCOMP_LIST_SUCCESS,
-  LOAD_FCOMP_LIST,
-  LOAD_FCOMP_LIST_ERROR,
+  LOAD_CONTEST_LIST_SUCCESS,
+  LOAD_CONTEST_LIST,
+  LOAD_CONTEST_LIST_ERROR,
   DRAWER_OPEN_SET_STATUS,
 } from './actions';
 
@@ -23,23 +23,23 @@ import { fromJS } from 'immutable';
 const initialState = fromJS({
   loading: false,
   error: false,
-  fCompList: false,
+  visibleContestList: false,
   isDrawerOpen: false,
 });
 
 function appReducer(state = initialState, action) {
   switch (action.type) {
-    case LOAD_FCOMP_LIST:
+    case LOAD_CONTEST_LIST:
       return state
         .set('loading', true)
         .set('error', false)
-        .set('fCompList', false);
-    case LOAD_FCOMP_LIST_SUCCESS:
+        .set('contestList', false);
+    case LOAD_CONTEST_LIST_SUCCESS:
       return state
-        .set('fCompList', action.fCompList)
+        .set('contestList', action.contestList)
         .set('loading', false)
         .set('error', false);
-    case LOAD_FCOMP_LIST_ERROR:
+    case LOAD_CONTEST_LIST_ERROR:
       return state
         .set('error', action.error)
         .set('loading', false);

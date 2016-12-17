@@ -10,7 +10,7 @@
     "message": "Приветствуем на портале VHustle, посвящённому хастлу в целом и конкурсам в частности!"
   },
   {
-    "id": "vhustle.containers.HomePage.competitions.ErrorLoading",
+    "id": "vhustle.containers.HomePage.contests.ErrorLoading",
     "defaultMessage": "Произошла ошибка при загрузке списка соревнований",
     "message": "Произошла ошибка при загрузке списка соревнований"
   },
@@ -25,7 +25,7 @@
     "message": "En"
   },
   {
-    "id": "vhustle.containers.App.goToCompetitionsMI",
+    "id": "vhustle.containers.App.goToContestListMI",
     "defaultMessage": "Конкурсы",
     "message": "Конкурсы"
   }

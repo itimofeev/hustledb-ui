@@ -16,9 +16,9 @@ const selectError = () => createSelector(
   (globalState) => globalState.get('error')
 );
 
-const selectFCompList = () => createSelector(
+const selectContestList = () => createSelector(
   selectGlobal(),
-  (globalState) => globalState.get('fCompList')
+  (globalState) => globalState.get('contestList')
 );
 
 const selectIsDrawerOpen = () => createSelector(
@@ -44,7 +44,7 @@ const selectLocationState = () => {
 
 export {
   selectGlobal,
-  selectFCompList,
+  selectContestList,
   selectLoading,
   selectError,
   selectLocationState,

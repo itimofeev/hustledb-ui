@@ -46,7 +46,7 @@ function App(props) {
             iconElementLeft={<IconButton><NavigationClose /></IconButton>}
             onLeftIconButtonTouchTap={props.closeDrawer}
           />
-          <MenuItem onTouchTap={props.goToCompetitions}><FormattedMessage {...messages.competitionsMI} /></MenuItem>
+          <MenuItem onTouchTap={props.goToContestList}><FormattedMessage {...messages.contestListMI} /></MenuItem>
         </Drawer>
 
         <AppBar
@@ -68,7 +68,7 @@ function App(props) {
 App.propTypes = {
   children: React.PropTypes.node,
   handleTitleTouchTap: React.PropTypes.func,
-  goToCompetitions: React.PropTypes.func,
+  goToContestList: React.PropTypes.func,
   closeDrawer: React.PropTypes.func.isRequired,
   openDrawer: React.PropTypes.func.isRequired,
   loading: React.PropTypes.bool,
@@ -84,9 +84,9 @@ function mapDispatchToProps(dispatch) {
   return {
     dispatch,
     handleTitleTouchTap: () => dispatch(push('/')),
-    goToCompetitions: () => {
+    goToContestList: () => {
       dispatch(closeDrawer());
-      dispatch(push('/competitions'));
+      dispatch(push('/contests'));
     },
     closeDrawer: () => dispatch(closeDrawer()),
     openDrawer: () => dispatch(openDrawer()),

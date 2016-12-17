@@ -39,19 +39,19 @@ export default function createRoutes(store) {
         importModules.catch(errorLoading);
       },
     }, {
-      path: '/competitions',
-      name: 'competitionList',
+      path: '/contests',
+      name: 'contestList',
       getComponent(nextState, cb) {
         const importModules = Promise.all([
-          System.import('containers/CompetitionListPage/reducer'),
-          System.import('containers/CompetitionListPage/sagas'),
-          System.import('containers/CompetitionListPage'),
+          System.import('containers/ContestListPage/reducer'),
+          System.import('containers/ContestListPage/sagas'),
+          System.import('containers/ContestListPage'),
         ]);
 
         const renderRoute = loadModule(cb);
 
         importModules.then(([reducer, sagas, component]) => {
-          injectReducer('competitionList', reducer.default);
+          injectReducer('contestList', reducer.default);
           injectSagas(sagas.default);
           renderRoute(component);
         });
