@@ -13,9 +13,12 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { formatDate, keywords } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
-import { Card, CardHeader, CardText } from 'material-ui/Card';
+import Divider from 'material-ui/Divider';
+import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
 import styles from './styles.css';
+import imgHustleSA from './img/hustlesa.png';
+import imgVK from './img/vk.png';
 
 import {
   selectContestList,
@@ -60,11 +63,11 @@ export class ContestListPage extends React.Component {
     window.removeEventListener('resize', this.resizeListener);
   }
 
-  onExpand = (expanded, itemId) => {
-    if (expanded) {
-      this.props.onContestSelect(itemId);
-    } else {
+  onExpand = (itemId) => {
+    if (this.props.selectedContest === itemId) {
       this.props.onContestSelect(false);
+    } else {
+      this.props.onContestSelect(itemId);
     }
   };
 
@@ -79,28 +82,65 @@ export class ContestListPage extends React.Component {
     if (contestList) {
       listRender = (
         <div className={styles.contestList}>
-          {contestList.map((item) =>
-            <Card
-              key={item.id}
-              expanded={selectedContestId === item.id}
-              onExpandChange={(expanded) => this.onExpand(expanded, item.id)}
-              className={selectedContestId === item.id ? styles.expandedContest : styles.contestItem}
-            >
-              <CardHeader
-                title={item.title}
-                subtitle={formatDate(item.date)}
-                actAsExpander
-              />
-              <CardText expandable>
-                Обсуждение: <a href={item.url}>hustle-sa</a>
-                {item.videos_link &&
-                <MarkdownElement text={`## Видео \n${item.videos_link}`} />
-                }
-                {item.results_link &&
-                <MarkdownElement text={`## Результаты \n${item.results_link}`} />
-                }
-              </CardText>
-            </Card>
+          {contestList.map((item) => {
+              const isSelected = selectedContestId === item.id;
+
+              return (
+                <Paper
+                  key={item.id}
+                  className={isSelected ? styles.ContestItem_expanded : styles.ContestItem}
+                >
+                  <div className={styles.ContestItem_content} onClick={() => this.onExpand(item.id)}>
+                    <div className={styles.ContestItem_image}>
+                      <img width={120} height={120} alt={item.title} />
+                    </div>
+                    <div className={styles.ContestItem_info}>
+                      <div className={styles.ContestItem_title}>
+                        {item.title}
+                      </div>
+                      <div className={styles.ContestItem_date}>
+                        {formatDate(item.date)}
+                      </div>
+                      <div className={styles.ContestItem_city}>
+                        {item.city_name}
+                      </div>
+                    </div>
+                  </div>
+
+                  <Divider />
+
+                  <div className={`${styles.ContestItemCollapsible} ${isSelected ? styles.opened : ''}`}>
+                    <a className={styles.ContestItemCollapsible_infoLink} href={item.url} target="_blank">
+                      <img
+                        alt="Иконка форума"
+                        className={styles.ContestItemCollapsible_iconLink}
+                        src={imgHustleSA}
+                        style={{ width: 20, height: 20 }}
+                      />
+                      Форум
+                    </a>
+                    {item.vk_link &&
+                    <a className={styles.ContestItemCollapsible_infoLink} href={item.vk_link} target="_blank">
+                      <img
+                        alt="Иконка вк"
+                        className={styles.ContestItemCollapsible_iconLink}
+                        src={imgVK}
+                        style={{ width: 20, height: 20 }}
+                      />
+                      Группа ВК
+                    </a>
+                    }
+
+                    {item.videos_link &&
+                    <MarkdownElement text={`## Видео \n${item.videos_link}`} style={{ padding: 0 }} />
+                    }
+                    {item.results_link &&
+                    <MarkdownElement text={`## Результаты \n${item.results_link}`} style={{ padding: 0 }} />
+                    }
+                  </div>
+                </Paper>
+              );
+            }
           )}
         </div>
       );
@@ -119,7 +159,7 @@ export class ContestListPage extends React.Component {
     return (
       <article>
         <Helmet
-          title="Соревнования"
+          title="Турниры"
           meta={[
             { name: 'description', content: 'VHustle — портал с информацией о конкурсах по хастлу' },
             { name: 'keywords', content: keywords },
@@ -152,7 +192,7 @@ ContestListPage.propTypes = {
     React.PropTypes.bool,
   ]),
   selectedContest: React.PropTypes.oneOfType([
-    React.PropTypes.object,
+    React.PropTypes.number,
     React.PropTypes.bool,
   ]),
   onSubmitForm: React.PropTypes.func,

@@ -34,8 +34,8 @@ function App(props) {
 
       <div className={styles.wrapper}>
         <Helmet
-          titleTemplate="%s | VHustle"
-          defaultTitle="VHustle"
+          titleTemplate="%s | ВХастле"
+          defaultTitle="ВХастле"
           meta={[
             { name: 'description', content: 'Hustle SA dancers rating' },
           ]}
@@ -51,7 +51,7 @@ function App(props) {
 
         <AppBar
           onTitleTouchTap={props.handleTitleTouchTap}
-          title={<span className={styles.title}>VHustle</span>}
+          title={<span className={styles.title}>ВХастле</span>}
           onLeftIconButtonTouchTap={props.openDrawer}
         />
         {props.loading && <LinearProgress mode="indeterminate" />}
