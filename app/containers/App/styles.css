@@ -33,5 +33,5 @@ body.fontLoaded {
 
 /* override style from sanitize css because it fails some buttons appearance (MenuItems and Chips) */
 html [type='button'] {
-  -webkit-appearance: inherit !important;
+  -webkit-appearance: none !important;
 }

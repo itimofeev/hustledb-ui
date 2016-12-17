@@ -15,7 +15,6 @@ import { formatDate, keywords } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import { Card, CardHeader, CardText } from 'material-ui/Card';
 import CircularProgress from 'material-ui/CircularProgress';
-import Chip from 'material-ui/Chip';
 import styles from './styles.css';
 
 import {
@@ -27,11 +26,12 @@ import {
 import {
   selectSelectedContest,
   selectSmallWidth,
+  selectVisibleContestList,
 } from './selectors';
 
 import { loadContestList } from '../App/actions';
 import { contestSelected, changeSmallWidth } from './actions';
-// import MarkdownElement from 'react-material-markdown-element';
+import MarkdownElement from 'react-material-markdown-element';
 import { FormattedMessage } from 'react-intl';
 
 export class ContestListPage extends React.Component {
@@ -39,7 +39,10 @@ export class ContestListPage extends React.Component {
    * when initial state username is not null, submit the form to load repos
    */
   componentDidMount() {
-    this.props.onSubmitForm();
+    if (!this.props.contestList) {
+      this.props.onSubmitForm();
+    }
+
     const that = this;
 
     this.resizeListener = function () {
@@ -57,67 +60,50 @@ export class ContestListPage extends React.Component {
     window.removeEventListener('resize', this.resizeListener);
   }
 
-  onRawSelect = (event) => {
-    this.props.onContestSelect(this.props.contestList[event[0]]);
+  onExpand = (expanded, itemId) => {
+    if (expanded) {
+      this.props.onContestSelect(itemId);
+    } else {
+      this.props.onContestSelect(false);
+    }
   };
 
-  handleChipTouchTap = (year) => {
-  };
 
   render() {
-    const inStyles = {
-      chip: {
-        margin: 4,
-      },
-      wrapper: {
-        display: 'flex',
-        flexWrap: 'wrap',
-      },
-    };
-
-    const contestList = this.props.contestList;
-    // const selectedComp = this.props.selectedContest;
+    const contestList = this.props.visibleContestList;
+    const selectedContestId = this.props.selectedContest;
     let listRender;
     let loadingRender;
     let errorRender;
-    let contestFilterRender;
 
     if (contestList) {
       listRender = (
-        <div style={{ width: '100%' }}>
+        <div className={styles.contestList}>
           {contestList.map((item) =>
-            <Card key={item.id}>
+            <Card
+              key={item.id}
+              expanded={selectedContestId == item.id}
+              onExpandChange={(expanded) => this.onExpand(expanded, item.id)}
+              className={selectedContestId == item.id ? styles.expandedContest : styles.contestItem }
+            >
               <CardHeader
                 title={item.title}
                 subtitle={formatDate(item.date)}
                 actAsExpander
-                showExpandableButton
               />
               <CardText expandable>
-                <Chip>
-                  hello
-                </Chip>
-                Обсуждение: {item.url}
+                Обсуждение: <a href={item.url}>hustle-sa</a>
+                {item.videos_link &&
+                <MarkdownElement text={`## Видео \n` + item.videos_link} />
+                }
+                {item.results_link &&
+                <MarkdownElement text={`## Результаты \n` + item.results_link} />
+                }
               </CardText>
             </Card>
           )}
         </div>
       );
-
-      contestFilterRender = (
-        <div style={inStyles.wrapper}>
-          <Chip
-            style={styles.chip}
-          >
-            2016
-          </Chip>
-          <Chip
-            style={styles.chip}
-          >
-            2017
-          </Chip>
-        </div>
-      )
     }
 
     if (this.props.loading) {
@@ -141,7 +127,6 @@ export class ContestListPage extends React.Component {
         />
 
         <div className={styles.container}>
-          {contestFilterRender}
           {listRender}
           {errorRender}
           {loadingRender}
@@ -189,6 +174,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   contestList: selectContestList(),
+  visibleContestList: selectVisibleContestList(),
   smallWidth: selectSmallWidth(),
   selectedContest: selectSelectedContest(),
   loading: selectLoading(),
