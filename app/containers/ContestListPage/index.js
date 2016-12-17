@@ -82,9 +82,9 @@ export class ContestListPage extends React.Component {
           {contestList.map((item) =>
             <Card
               key={item.id}
-              expanded={selectedContestId == item.id}
+              expanded={selectedContestId === item.id}
               onExpandChange={(expanded) => this.onExpand(expanded, item.id)}
-              className={selectedContestId == item.id ? styles.expandedContest : styles.contestItem }
+              className={selectedContestId === item.id ? styles.expandedContest : styles.contestItem}
             >
               <CardHeader
                 title={item.title}
@@ -94,10 +94,10 @@ export class ContestListPage extends React.Component {
               <CardText expandable>
                 Обсуждение: <a href={item.url}>hustle-sa</a>
                 {item.videos_link &&
-                <MarkdownElement text={`## Видео \n` + item.videos_link} />
+                <MarkdownElement text={`## Видео \n${item.videos_link}`} />
                 }
                 {item.results_link &&
-                <MarkdownElement text={`## Результаты \n` + item.results_link} />
+                <MarkdownElement text={`## Результаты \n${item.results_link}`} />
                 }
               </CardText>
             </Card>
@@ -109,7 +109,7 @@ export class ContestListPage extends React.Component {
     if (this.props.loading) {
       loadingRender = (
         <CircularProgress size={80} thickness={5} />
-      )
+      );
     }
 
     if (this.props.error) {
@@ -144,6 +144,10 @@ ContestListPage.propTypes = {
     React.PropTypes.bool,
   ]),
   contestList: React.PropTypes.oneOfType([
+    React.PropTypes.array,
+    React.PropTypes.bool,
+  ]),
+  visibleContestList: React.PropTypes.oneOfType([
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),

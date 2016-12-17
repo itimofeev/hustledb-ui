@@ -32,7 +32,7 @@ function contestListReducer(state = initialState, action) {
 
 function filterContests(contestList) {
   const currentYear = new Date().getFullYear();
-  return contestList.filter((c) => c.date.getFullYear() == currentYear)
+  return contestList.filter((c) => c.date.getFullYear() === currentYear);
 }
 
 export default contestListReducer;
