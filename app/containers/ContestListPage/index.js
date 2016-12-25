@@ -99,12 +99,12 @@ export class ContestListPage extends React.Component {
                       <div className={styles.ContestItem_title}>
                         {item.title}
                       </div>
-                      <div className={styles.ContestItem_date}>
-                        {formatDate(item.date)}
-                      </div>
                       <div className={styles.ContestItem_city}>
                         {item.city_name}
                       </div>
+                    </div>
+                    <div className={styles.ContestItem_date}>
+                      {item.date_str}
                     </div>
                   </div>
 
