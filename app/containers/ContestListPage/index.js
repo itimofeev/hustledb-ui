@@ -11,11 +11,12 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import messages from './messages';
-import { formatDate, keywords, avatarTextFrom } from '../../utils/util';
+import { keywords, avatarTextFrom } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
+import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar';
 import styles from './styles.css';
 import imgHustleSA from './img/hustlesa.png';
@@ -108,18 +109,7 @@ export class ContestListPage extends React.Component {
                     </div>
                   </div>
 
-                  <Divider />
-
-                  <div className={`${styles.ContestItemCollapsible} ${isSelected ? styles.opened : ''}`}>
-                    <a className={styles.ContestItemCollapsible_infoLink} href={item.url} target="_blank">
-                      <img
-                        alt="Иконка форума"
-                        className={styles.ContestItemCollapsible_iconLink}
-                        src={imgHustleSA}
-                        style={{ width: 20, height: 20 }}
-                      />
-                      Форум
-                    </a>
+                  <div className={styles.ContestItem_actions}>
                     {item.vk_link &&
                     <a className={styles.ContestItemCollapsible_infoLink} href={item.vk_link} target="_blank">
                       <img
@@ -128,16 +118,25 @@ export class ContestListPage extends React.Component {
                         src={imgVK}
                         style={{ width: 20, height: 20 }}
                       />
-                      Группа ВК
                     </a>
                     }
+                    <a className={styles.ContestItemCollapsible_infoLink} href={item.forum_url} target="_blank">
+                      <img
+                        alt="Иконка форума"
+                        className={styles.ContestItemCollapsible_iconLink}
+                        src={imgHustleSA}
+                        style={{ width: 20, height: 20 }}
+                      />
+                    </a>
 
-                    {item.videos_link &&
-                    <MarkdownElement text={`## Видео \n${item.videos_link}`} style={{ padding: 0 }} />
-                    }
-                    {item.results_link &&
-                    <MarkdownElement text={`## Результаты \n${item.results_link}`} style={{ padding: 0 }} />
-                    }
+                    <FlatButton label="Пока"/>
+                    <FlatButton label="Давай, до свидания!"/>
+                  </div>
+
+                  <Divider />
+
+                  <div className={`${styles.ContestItemCollapsible} ${isSelected ? styles.opened : ''}`}>
+                    <MarkdownElement text={item.common_info} style={{ padding: 0 }} />
                   </div>
                 </Paper>
               );

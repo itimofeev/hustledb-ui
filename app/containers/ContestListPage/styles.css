@@ -50,6 +50,11 @@
   line-height: 36px;
 }
 
+.ContestItem_actions {
+  height: 50px;
+  display: flex;
+}
+
 .ContestItemCollapsible {
   max-height: 0;
   opacity: 0;
