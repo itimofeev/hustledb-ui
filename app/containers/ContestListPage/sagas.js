@@ -6,7 +6,7 @@ import request from 'utils/request';
 
 export function* getContestList() {
   // const username = yield select(selectUsername());
-  const requestURL = '/api/v1/forum/competitions';
+  const requestURL = '/api/v1/contests';
 
   const contestList = yield call(request, requestURL);
 

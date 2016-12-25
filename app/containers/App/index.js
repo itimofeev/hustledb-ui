@@ -28,16 +28,21 @@ import styles from './styles.css';
 import messages from './messages';
 import { FormattedMessage } from 'react-intl';
 
+// This replaces the textColor value on the palette
+// and then update the keys for each component that depends on it.
+// More on Colors: http://www.material-ui.com/#/customization/colors
+import { muiTheme } from './muiThemes';
+
 function App(props) {
   return (
-    <MuiThemeProvider>
+    <MuiThemeProvider muiTheme={muiTheme}>
 
       <div className={styles.wrapper}>
         <Helmet
-          titleTemplate="%s | ВХастле"
-          defaultTitle="ВХастле"
+          titleTemplate="%s | Вхастле"
+          defaultTitle="Вхастле"
           meta={[
-            { name: 'description', content: 'Hustle SA dancers rating' },
+            { name: 'description', content: 'Hustle dancers rating' },
           ]}
         />
 
