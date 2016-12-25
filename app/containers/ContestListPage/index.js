@@ -11,11 +11,12 @@ import { push } from 'react-router-redux';
 import Helmet from 'react-helmet';
 
 import messages from './messages';
-import { formatDate, keywords } from '../../utils/util';
+import { formatDate, keywords, avatarTextFrom } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
+import Avatar from 'material-ui/Avatar';
 import styles from './styles.css';
 import imgHustleSA from './img/hustlesa.png';
 import imgVK from './img/vk.png';
@@ -92,7 +93,7 @@ export class ContestListPage extends React.Component {
                 >
                   <div className={styles.ContestItem_content} onClick={() => this.onExpand(item.id)}>
                     <div className={styles.ContestItem_image}>
-                      <img width={120} height={120} alt={item.title} />
+                      <Avatar size={120}>{avatarTextFrom(item.title)}</Avatar>
                     </div>
                     <div className={styles.ContestItem_info}>
                       <div className={styles.ContestItem_title}>
