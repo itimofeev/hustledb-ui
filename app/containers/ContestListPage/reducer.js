@@ -31,19 +31,13 @@ function contestListReducer(state = initialState, action) {
 }
 
 function buildYearMap(contestList) {
-  // const currentYear = new Date().getFullYear();
-  // return contestList.filter((c) => c.date.getFullYear() === currentYear);
-
-  let res = contestList.reduce(function(map, obj) {
+  return contestList.reduce(function(map, obj) {
     if(!map[obj.date.getFullYear()]) {
       map[obj.date.getFullYear()] = [];
     }
     map[obj.date.getFullYear()].push(obj);
     return map;
   }, {});
-
-  debugger;
-  return res
 }
 
 export default contestListReducer;

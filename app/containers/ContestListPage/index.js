@@ -14,11 +14,13 @@ import messages from './messages';
 import { keywords, avatarTextFrom } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
 import { Tabs, Tab } from 'material-ui/Tabs';
+import { List, ListItem } from 'material-ui/List';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
 import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
+import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import styles from './styles.css';
 import imgHustleSA from './img/hustlesa.png';
@@ -44,10 +46,11 @@ import { FormattedMessage } from 'react-intl';
 export class ContestListPage extends React.Component {
   state = {
     open: false,
+    dialogContent: false,
   };
 
-  handleOpen = () => {
-    this.setState({ open: true });
+  handleOpen = (dialogContent) => {
+    this.setState({ open: true, dialogContent: dialogContent });
   };
 
   handleClose = () => {
@@ -101,7 +104,7 @@ export class ContestListPage extends React.Component {
       listRender = (
         <Tabs>
           {yearList.map((e) => {
-            return <Tab label={e}>
+            return <Tab key={e} label={e}>
               <div className={styles.ContestList}>
                 {contestList[e].map((item) => {
 
@@ -130,26 +133,57 @@ export class ContestListPage extends React.Component {
                       </div>
 
                       <div className={styles.ContestItem_actions}>
-                        {item.vk_link &&
-                        <a className={styles.ContestItemCollapsible_infoLink} href={item.vk_link} target="_blank">
-                          <img
-                            alt="Иконка вк"
-                            className={styles.ContestItemCollapsible_iconLink}
-                            src={imgVK}
-                            style={{ width: 20, height: 20 }}
-                          />
-                        </a>
-                        }
-                        <a className={styles.ContestItemCollapsible_infoLink} href={item.forum_url} target="_blank">
-                          <img
-                            alt="Иконка форума"
-                            className={styles.ContestItemCollapsible_iconLink}
-                            src={imgHustleSA}
-                            style={{ width: 20, height: 20 }}
-                          />
-                        </a>
+                        <FlatButton label="Форум" href={item.forum_url} target="_blank" />
 
-                        {/*<FlatButton label="Пока" onTouchTap={this.handleOpen}/>*/}
+                        {item.vk_link &&
+                        <IconButton href={item.vk_link} target="_blank">
+                          <div className={styles.ContestItem_Action_icon}>
+                            <i className="zmdi zmdi-vk" />
+                          </div>
+                        </IconButton>
+                        }
+
+                        {item.results_link && item.results_link.length > 0 &&
+                        <IconButton onClick={() => this.handleOpen(item.results_link)}>
+                          <div className={styles.ContestItem_Action_icon2}>
+                            <i className="fa fa-trophy" />
+                          </div>
+                        </IconButton>
+                        }
+
+                        {item.videos_link && item.videos_link.length > 1 &&
+                        <IconButton onClick={() => this.handleOpen(item.videos_link)}>
+                          <div className={styles.ContestItem_Action_icon2}>
+                            <i className="zmdi zmdi-youtube-play" />
+                          </div>
+                        </IconButton>
+                        }
+
+                        {item.videos_link && item.videos_link.length === 1 &&
+                        <IconButton href={item.videos_link[0].link} target="_blank">
+                          <div className={styles.ContestItem_Action_icon}>
+                            <i className="zmdi zmdi-youtube-play" />
+                          </div>
+                        </IconButton>
+                        }
+
+
+                        {item.photos_link && item.photos_link.length > 1 &&
+                        <IconButton onClick={() => this.handleOpen(item.photos_link)}>
+                          <div className={styles.ContestItem_Action_icon2}>
+                            <i className="zmdi zmdi-camera" />
+                          </div>
+                        </IconButton>
+                        }
+
+
+                        {item.photos_link && item.photos_link.length === 1 &&
+                        <IconButton href={item.photos_link[0].link} target="_blank">
+                          <div className={styles.ContestItem_Action_icon}>
+                            <i className="zmdi zmdi-camera" />
+                          </div>
+                        </IconButton>
+                        }
                       </div>
 
                       <Divider />
@@ -180,12 +214,16 @@ export class ContestListPage extends React.Component {
 
     let dialogRender = (
       <Dialog
-        title="Dialog With Actions"
         modal={false}
         open={this.state.open}
         onRequestClose={this.handleClose}
       >
-        The actions in this window were passed in as an array of React objects.
+        <List>
+          {this.state.dialogContent && this.state.dialogContent.map((r) => {
+            return <ListItem key={r.text} primaryText={r.text} href={r.link} target="_blank">
+            </ListItem>
+          })}
+        </List>
       </Dialog>
     );
 
