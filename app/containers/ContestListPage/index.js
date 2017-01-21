@@ -16,6 +16,7 @@ import { createStructuredSelector } from 'reselect';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
+import Dialog from 'material-ui/Dialog';
 import FlatButton from 'material-ui/FlatButton';
 import Avatar from 'material-ui/Avatar';
 import styles from './styles.css';
@@ -40,6 +41,18 @@ import MarkdownElement from 'react-material-markdown-element';
 import { FormattedMessage } from 'react-intl';
 
 export class ContestListPage extends React.Component {
+  state = {
+    open: false,
+  };
+
+  handleOpen = () => {
+    this.setState({open: true});
+  };
+
+  handleClose = () => {
+    this.setState({open: false});
+  };
+
   /**
    * when initial state username is not null, submit the form to load repos
    */
@@ -129,8 +142,7 @@ export class ContestListPage extends React.Component {
                       />
                     </a>
 
-                    <FlatButton label="Пока"/>
-                    <FlatButton label="Давай, до свидания!"/>
+                    {/*<FlatButton label="Пока" onTouchTap={this.handleOpen}/>*/}
                   </div>
 
                   <Divider />
@@ -156,6 +168,17 @@ export class ContestListPage extends React.Component {
       errorRender = <FormattedMessage {...messages.errorLoadingContestList} />;
     }
 
+    let dialogRender = (
+      <Dialog
+        title="Dialog With Actions"
+        modal={false}
+        open={this.state.open}
+        onRequestClose={this.handleClose}
+      >
+        The actions in this window were passed in as an array of React objects.
+      </Dialog>
+    );
+
     return (
       <article>
         <Helmet
@@ -170,6 +193,7 @@ export class ContestListPage extends React.Component {
           {listRender}
           {errorRender}
           {loadingRender}
+          {dialogRender}
         </div>
       </article>
     );
