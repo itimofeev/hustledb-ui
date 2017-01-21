@@ -13,6 +13,7 @@ import Helmet from 'react-helmet';
 import messages from './messages';
 import { keywords, avatarTextFrom } from '../../utils/util';
 import { createStructuredSelector } from 'reselect';
+import { Tabs, Tab } from 'material-ui/Tabs';
 import Divider from 'material-ui/Divider';
 import Paper from 'material-ui/Paper';
 import CircularProgress from 'material-ui/CircularProgress';
@@ -32,7 +33,7 @@ import {
 import {
   selectSelectedContest,
   selectSmallWidth,
-  selectVisibleContestList,
+  selectVisibleContestMap,
 } from './selectors';
 
 import { loadContestList } from '../App/actions';
@@ -46,11 +47,11 @@ export class ContestListPage extends React.Component {
   };
 
   handleOpen = () => {
-    this.setState({open: true});
+    this.setState({ open: true });
   };
 
   handleClose = () => {
-    this.setState({open: false});
+    this.setState({ open: false });
   };
 
   /**
@@ -88,73 +89,82 @@ export class ContestListPage extends React.Component {
 
 
   render() {
-    const contestList = this.props.visibleContestList;
+    const contestList = this.props.visibleContestMap;
     const selectedContestId = this.props.selectedContest;
     let listRender;
     let loadingRender;
     let errorRender;
 
+    let yearList = Object.keys(contestList).sort((a, b) => a < b);
+
     if (contestList) {
       listRender = (
-        <div className={styles.contestList}>
-          {contestList.map((item) => {
-              const isSelected = selectedContestId === item.id;
+        <Tabs>
+          {yearList.map((e) => {
+            return <Tab label={e}>
+              <div className={styles.ContestList}>
+                {contestList[e].map((item) => {
 
-              return (
-                <Paper
-                  key={item.id}
-                  className={isSelected ? styles.ContestItem_expanded : styles.ContestItem}
-                >
-                  <div className={styles.ContestItem_content} onClick={() => this.onExpand(item.id)}>
-                    <div className={styles.ContestItem_image}>
-                      <Avatar size={120}>{avatarTextFrom(item.title)}</Avatar>
-                    </div>
-                    <div className={styles.ContestItem_info}>
-                      <div className={styles.ContestItem_title}>
-                        {item.title}
+                  const isSelected = selectedContestId === item.id;
+
+                  return (
+                    <Paper
+                      key={item.id}
+                      className={isSelected ? styles.ContestItem_expanded : styles.ContestItem}
+                    >
+                      <div className={styles.ContestItem_content} onClick={() => this.onExpand(item.id)}>
+                        <div className={styles.ContestItem_image}>
+                          <Avatar size={60}>{avatarTextFrom(item.title)}</Avatar>
+                        </div>
+                        <div className={styles.ContestItem_info}>
+                          <div className={styles.ContestItem_title}>
+                            {item.title}
+                          </div>
+                          <div className={styles.ContestItem_city}>
+                            {item.city_name}
+                          </div>
+                        </div>
+                        <div className={styles.ContestItem_date}>
+                          {item.date_str}
+                        </div>
                       </div>
-                      <div className={styles.ContestItem_city}>
-                        {item.city_name}
+
+                      <div className={styles.ContestItem_actions}>
+                        {item.vk_link &&
+                        <a className={styles.ContestItemCollapsible_infoLink} href={item.vk_link} target="_blank">
+                          <img
+                            alt="Иконка вк"
+                            className={styles.ContestItemCollapsible_iconLink}
+                            src={imgVK}
+                            style={{ width: 20, height: 20 }}
+                          />
+                        </a>
+                        }
+                        <a className={styles.ContestItemCollapsible_infoLink} href={item.forum_url} target="_blank">
+                          <img
+                            alt="Иконка форума"
+                            className={styles.ContestItemCollapsible_iconLink}
+                            src={imgHustleSA}
+                            style={{ width: 20, height: 20 }}
+                          />
+                        </a>
+
+                        {/*<FlatButton label="Пока" onTouchTap={this.handleOpen}/>*/}
                       </div>
-                    </div>
-                    <div className={styles.ContestItem_date}>
-                      {item.date_str}
-                    </div>
-                  </div>
 
-                  <div className={styles.ContestItem_actions}>
-                    {item.vk_link &&
-                    <a className={styles.ContestItemCollapsible_infoLink} href={item.vk_link} target="_blank">
-                      <img
-                        alt="Иконка вк"
-                        className={styles.ContestItemCollapsible_iconLink}
-                        src={imgVK}
-                        style={{ width: 20, height: 20 }}
-                      />
-                    </a>
-                    }
-                    <a className={styles.ContestItemCollapsible_infoLink} href={item.forum_url} target="_blank">
-                      <img
-                        alt="Иконка форума"
-                        className={styles.ContestItemCollapsible_iconLink}
-                        src={imgHustleSA}
-                        style={{ width: 20, height: 20 }}
-                      />
-                    </a>
+                      <Divider />
 
-                    {/*<FlatButton label="Пока" onTouchTap={this.handleOpen}/>*/}
-                  </div>
-
-                  <Divider />
-
-                  <div className={`${styles.ContestItemCollapsible} ${isSelected ? styles.opened : ''}`}>
-                    <MarkdownElement text={item.common_info} style={{ padding: 0 }} />
-                  </div>
-                </Paper>
-              );
-            }
-          )}
-        </div>
+                      <div className={`${styles.ContestItemCollapsible} ${isSelected ? styles.opened : ''}`}>
+                        <MarkdownElement text={item.common_info} style={{ padding: 0 }} />
+                      </div>
+                    </Paper>
+                  );
+                })}
+              </div>
+            </Tab>
+          })
+          }
+        </Tabs>
       );
     }
 
@@ -189,7 +199,7 @@ export class ContestListPage extends React.Component {
           ]}
         />
 
-        <div className={styles.container}>
+        <div className={styles.Contests_container}>
           {listRender}
           {errorRender}
           {loadingRender}
@@ -211,8 +221,8 @@ ContestListPage.propTypes = {
     React.PropTypes.array,
     React.PropTypes.bool,
   ]),
-  visibleContestList: React.PropTypes.oneOfType([
-    React.PropTypes.array,
+  visibleContestMap: React.PropTypes.oneOfType([
+    React.PropTypes.object,
     React.PropTypes.bool,
   ]),
   selectedContest: React.PropTypes.oneOfType([
@@ -242,7 +252,7 @@ function mapDispatchToProps(dispatch) {
 
 const mapStateToProps = createStructuredSelector({
   contestList: selectContestList(),
-  visibleContestList: selectVisibleContestList(),
+  visibleContestMap: selectVisibleContestMap(),
   smallWidth: selectSmallWidth(),
   selectedContest: selectSelectedContest(),
   loading: selectLoading(),

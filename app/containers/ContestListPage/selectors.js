@@ -19,9 +19,9 @@ const selectSmallWidth = () => createSelector(
   (substate) => substate.get('smallWidth')
 );
 
-const selectVisibleContestList = () => createSelector(
+const selectVisibleContestMap = () => createSelector(
   selectContestListDomain(),
-  (substate) => substate.get('visibleContestList')
+  (substate) => substate.get('visibleContestMap')
 );
 /**
  * Default selector used by ContestListPage
@@ -35,7 +35,7 @@ const selectContestList = () => createSelector(
 export default selectContestList;
 export {
   selectContestListDomain,
-  selectVisibleContestList,
+  selectVisibleContestMap,
   selectSmallWidth,
   selectSelectedContest,
 };

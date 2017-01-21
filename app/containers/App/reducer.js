@@ -23,7 +23,7 @@ import { fromJS } from 'immutable';
 const initialState = fromJS({
   loading: false,
   error: false,
-  visibleContestList: false,
+  visibleContestMap: false,
   isDrawerOpen: false,
 });
 
