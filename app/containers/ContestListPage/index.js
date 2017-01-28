@@ -23,8 +23,6 @@ import FlatButton from 'material-ui/FlatButton';
 import IconButton from 'material-ui/IconButton';
 import Avatar from 'material-ui/Avatar';
 import styles from './styles.css';
-import imgHustleSA from './img/hustlesa.png';
-import imgVK from './img/vk.png';
 
 import {
   selectContestList,
@@ -117,7 +115,8 @@ export class ContestListPage extends React.Component {
                     >
                       <div className={styles.ContestItem_content} onClick={() => this.onExpand(item.id)}>
                         <div className={styles.ContestItem_image}>
-                          <Avatar size={60}>{avatarTextFrom(item.title)}</Avatar>
+                          {item.avatar_file && <Avatar size={60} src={`/images/contests/${item.avatar_file}`}/>}
+                          {!item.avatar_file && <Avatar size={60}>{avatarTextFrom(item.title)}</Avatar>}
                         </div>
                         <div className={styles.ContestItem_info}>
                           <div className={styles.ContestItem_title}>
